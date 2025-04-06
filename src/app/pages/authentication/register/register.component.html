@@ -1,0 +1,68 @@
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-600 to-pink-500 px-4 py-8">
+    <div class="flex flex-col md:flex-row w-full max-w-6xl bg-white rounded-2xl overflow-hidden shadow-2xl">
+      
+      <!-- Left Illustration Section -->
+      <div class="hidden md:flex md:w-1/2 bg-gradient-to-br from-purple-600 to-pink-500 items-center justify-center p-10">
+        <div class="text-white text-center">
+          <img src="/images/Curious-bro.svg" alt="Register Illustration" class="max-w-xs mx-auto mb-6">
+          <h2 class="text-4xl font-extrabold leading-tight mb-2">Shop Smart, Live Stylish ✨</h2>
+          <p class="text-sm text-white/90 max-w-sm mx-auto">
+            Discover the latest trends, unbeatable deals, and your favorite products — all in one place.
+          </p>
+        </div>
+      </div>
+  
+      <!-- Right Form Section -->
+      <div class="w-full md:w-1/2 p-8 sm:p-10">
+        <h2 class="text-3xl font-bold text-center text-pink-600 mb-2">Create Account</h2>
+        <p class="text-center text-gray-500 mb-6">Register as Admin, Vendor, or User</p>
+  
+        <form action="#" method="POST" class="space-y-4">
+          <!-- Full Name -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Full Name</label>
+            <input type="text" name="fullName" class="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-pink-400" required>
+          </div>
+  
+          <!-- Email -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Email</label>
+            <input type="email" name="email" class="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-pink-400" required>
+          </div>
+  
+          <!-- Password -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Password</label>
+            <input type="password" name="password" class="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-pink-400" required>
+          </div>
+  
+          <!-- Confirm Password -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Confirm Password</label>
+            <input type="password" name="confirmPassword" class="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-pink-400" required>
+          </div>
+  
+          <!-- Role -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Role</label>
+            <select name="role" class="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-pink-400">
+              <option value="admin">Admin</option>
+              <option value="vendor">Vendor</option>
+              <option value="user">User</option>
+            </select>
+          </div>
+  
+          <!-- Submit -->
+          <button type="submit" class="w-full bg-pink-600 text-white py-2 rounded-md hover:bg-pink-700 transition duration-200">
+            Register
+          </button>
+        </form>
+  
+        <p class="text-sm text-center text-gray-600 mt-4">
+          Already have an account?
+          <a href="/login" class="text-pink-600 hover:underline font-medium">Login here</a>
+        </p>
+      </div>
+    </div>
+  </div>
+  
