@@ -15,4 +15,5 @@ export const routes: Routes = [
   {path: 'instructions', component: VendorInstructionsComponent},   
   {path: 'forget-password', component: ForgetPasswordComponent},
 
+  
 ];
