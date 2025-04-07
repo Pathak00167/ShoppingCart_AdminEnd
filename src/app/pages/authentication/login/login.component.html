@@ -21,20 +21,22 @@
         Enter your credentials to continue exploring amazing offers.
       </p>
 
-      <form>
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
         <div class="mb-5">
-          <label class="block text-gray-700 mb-1">Username</label>
+          <label class="block text-gray-700 mb-1">Email</label>
           <div class="flex items-center border border-gray-300 rounded-lg px-4 py-2 bg-gray-50">
             <i class="fas fa-user text-gray-400 mr-3"></i>
-            <input type="text" placeholder="Enter your username" class="w-full bg-transparent outline-none text-sm" />
+            <input type="text" placeholder="Enter your Email" formControlName="email" class="w-full bg-transparent outline-none text-sm"  required=""/>
           </div>
         </div>
+
+        
 
         <div class="mb-5">
           <label class="block text-gray-700 mb-1">Password</label>
           <div class="flex items-center border border-gray-300 rounded-lg px-4 py-2 bg-gray-50">
             <i class="fas fa-lock text-gray-400 mr-3"></i>
-            <input type="password" placeholder="Enter your password" class="w-full bg-transparent outline-none text-sm" />
+            <input type="password" placeholder="Enter your password"  formControlName="password"  class="w-full bg-transparent outline-none text-sm" required />
           </div>
         </div>
 
