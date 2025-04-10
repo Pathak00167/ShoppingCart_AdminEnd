@@ -14,15 +14,7 @@ export class AuthserviceService {
   constructor(private http:HttpClient) { }
 
   login(credentials: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/login`, credentials).pipe(
-      tap(response => {
-        if (response && response.token) {
-          sessionStorage.setItem('token', response.token);
-          sessionStorage.setItem('role', response.role);
-          this.userInfo.set(response); // Update the signal with user info
-        }
-      })
-    );
+    return this.http.post<any>(`${this.apiUrl}/Auth/login`, credentials)
   }
 }
 

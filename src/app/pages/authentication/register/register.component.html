@@ -17,7 +17,7 @@
         <h2 class="text-3xl font-bold text-center text-pink-600 mb-2">Create Account</h2>
         <p class="text-center text-gray-500 mb-6">Register as Admin, Vendor, or User</p>
   
-        <form action="#" method="POST" class="space-y-4">
+        <form [formGroup]="Registerform" (ngSubmit)="registeruser()" class="space-y-4">
           <!-- Full Name -->
           <div>
             <label class="block text-sm font-medium text-gray-700">Full Name</label>
