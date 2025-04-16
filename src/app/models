@@ -1,0 +1,8 @@
+export interface Register {
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  email?: string; // optional since no [Required]
+  password: string;
+  // profilePictureUrl?: File; // if you decide to use it later
+}

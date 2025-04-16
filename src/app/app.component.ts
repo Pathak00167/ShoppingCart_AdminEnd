@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { LoaderComponent } from "./pages/loader/loader/loader.component";
-import { LoaderService } from './services/loader.service';
+import { LoaderService } from '../services/loader.service';
 import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 
