@@ -1,0 +1,75 @@
+<div class="p-4 sm:p-6 bg-gray-100 min-h-screen">
+  <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-6">Category Management</h1>
+
+  <!-- Add New Category Button -->
+  <div class="flex justify-between items-center mb-4">
+    <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm sm:text-base">
+      + Add New Category
+    </button>
+
+    <!-- Vendor Request Toggle -->
+    <button onclick="document.getElementById('vendorRequests').classList.toggle('hidden')" class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-800 text-sm sm:text-base">
+      View Vendor Requests
+    </button>
+  </div>
+
+  <!-- Category Grid -->
+  <!-- Category Grid -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+    <div *ngFor="let category of categories" class="bg-white rounded-xl shadow p-4 flex flex-col items-center text-center">
+      <img [src]="imageUrl + category.categoryIamge" alt="{{ category.categoryName }}" class="w-24 h-24 object-cover rounded-full mb-3" />
+      <h2 class="text-lg font-semibold text-gray-800 mb-2">{{ category.categoryName }}</h2>
+      <div class="space-y-2 w-full">
+        <button class="w-full bg-yellow-400 text-white py-1 rounded hover:bg-yellow-500 text-sm" >Edit</button>
+        <button class="w-full bg-red-500 text-white py-1 rounded hover:bg-red-600 text-sm" >Delete</button>
+        <button class="w-full bg-purple-500 text-white py-1 rounded hover:bg-purple-600 text-sm" >Add Subcategory</button>
+        <button class="w-full bg-indigo-500 text-white py-1 rounded hover:bg-indigo-600 text-sm" >View Subcategories</button>
+      </div>
+    </div>
+  </div>
+  
+
+
+  <!-- Vendor Requests Section (Hidden by Default) -->
+  <div id="vendorRequests" class="hidden bg-white shadow rounded-lg p-4">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-xl font-semibold text-gray-700">Vendor Category/Subcategory Requests</h2>
+      <button onclick="document.getElementById('vendorRequests').classList.add('hidden')" class="text-sm text-gray-500 hover:underline">Close</button>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm text-left text-gray-600">
+        <thead class="bg-gray-100">
+          <tr>
+            <th class="px-4 py-2">Vendor</th>
+            <th class="px-4 py-2">Type</th>
+            <th class="px-4 py-2">Name</th>
+            <th class="px-4 py-2">Requested Date</th>
+            <th class="px-4 py-2 text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-b hover:bg-gray-50">
+            <td class="px-4 py-2">Vendor A</td>
+            <td class="px-4 py-2">Category</td>
+            <td class="px-4 py-2">Gadgets</td>
+            <td class="px-4 py-2">2025-04-17</td>
+            <td class="px-4 py-2 text-right space-x-2">
+              <button class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 text-sm">Approve</button>
+              <button class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 text-sm">Reject</button>
+            </td>
+          </tr>
+          <tr class="border-b hover:bg-gray-50">
+            <td class="px-4 py-2">Vendor B</td>
+            <td class="px-4 py-2">Subcategory</td>
+            <td class="px-4 py-2">Smart Watches</td>
+            <td class="px-4 py-2">2025-04-18</td>
+            <td class="px-4 py-2 text-right space-x-2">
+              <button class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 text-sm">Approve</button>
+              <button class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 text-sm">Reject</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

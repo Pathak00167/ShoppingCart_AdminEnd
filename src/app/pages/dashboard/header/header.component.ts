@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Input,Output,EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -9,15 +10,10 @@ import { CommonModule } from '@angular/common';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
-  sidebarOpen: boolean = false;
-desktopSidebarOpen: boolean = true;
+  @Input() sidebarOpen: boolean = true;
+  @Output() toggleSidebarEvent = new EventEmitter<void>();
 
-toggleSidebar() {
-  this.sidebarOpen = !this.sidebarOpen;
-}
-
-toggleDesktopSidebar() {
-  this.desktopSidebarOpen = !this.desktopSidebarOpen;
-}
-
+  toggleSidebar() {
+    this.toggleSidebarEvent.emit();
+  }
 }

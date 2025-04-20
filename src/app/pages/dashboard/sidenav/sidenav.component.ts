@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Input,Output,EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-sidenav',
@@ -9,14 +10,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './sidenav.component.css'
 })
 export class SidenavComponent {
-  sidebarOpen: boolean = false;
-  desktopSidebarOpen: boolean = true;
-
-  toggleSidebar() {
-    this.sidebarOpen = !this.sidebarOpen;
-  }
-  
-  toggleDesktopSidebar() {
-    this.desktopSidebarOpen = !this.desktopSidebarOpen;
-  }
+  @Input() sidebarOpen: boolean = true;
+  @Input() mobileSidebarOpen: boolean = false;
+  @Output() toggleSidebar = new EventEmitter<void>();
 }

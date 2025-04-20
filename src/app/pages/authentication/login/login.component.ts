@@ -29,19 +29,19 @@ onLogin() {
 
   if (this.loginForm.valid) {
     this.service.login(this.loginForm.value).subscribe(response => {
-      const loginData = response.loginTry;
+     
 
-      if (loginData?.role === 'Admin') {
+      if (response?.role === 'Admin') {
         // Save the token and navigate to the admin page
-        sessionStorage.setItem('token', loginData.token);
-        sessionStorage.setItem('role', loginData.role);
-        this.router.navigate(['instructions']);
+        sessionStorage.setItem('token', response.token);
+        sessionStorage.setItem('role', response.role);
+        this.router.navigate(['instruction']);
       
-      } else if (loginData?.role === 'User') {
+      } else if (response?.role === 'Vendor') {
         // Save the token and navigate to the user dashboard
-        sessionStorage.setItem('token', loginData.token);
-        sessionStorage.setItem('role', loginData.role);
-        this.router.navigate(['instruction']); // Optional: navigate somewhere for users
+        sessionStorage.setItem('token', response.token);
+        sessionStorage.setItem('role', response.role);
+        this.router.navigate(['instructions']); // Optional: navigate somewhere for users
       
       } else {
         this.errorMessage = 'Access denied. Only admin can log in.';

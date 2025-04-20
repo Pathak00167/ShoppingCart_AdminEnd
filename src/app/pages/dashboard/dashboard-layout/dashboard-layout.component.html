@@ -1,0 +1,71 @@
+<div class="flex flex-col min-h-screen" [ngClass]="{ 'sidebar-collapsed': !desktopSidebarOpen }">
+    <app-header
+      [sidebarOpen]="desktopSidebarOpen"
+      (toggleSidebarEvent)="toggleSidebar()"
+    ></app-header>
+  
+    <div class="flex flex-1 overflow-hidden">
+      <app-sidenav
+        [sidebarOpen]="desktopSidebarOpen"
+        [mobileSidebarOpen]="sidebarOpen"
+        (toggleSidebar)="toggleSidebar()"
+      ></app-sidenav>
+  
+      <main class="flex-1 p-4 md:p-6 bg-gray-50 overflow-auto">
+        <h1 class="text-2xl md:text-3xl font-bold text-gray-800 mb-3">Welcome, Admin!</h1>
+        <p class="text-gray-600 mb-5">Here’s an overview of today’s activity.</p>
+  
+        <!-- Admin Metrics -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+          <div class="bg-white rounded-lg p-4 shadow text-center">
+            <div class="text-xl md:text-2xl font-bold text-blue-600">1,240</div>
+            <div class="text-sm text-gray-500">Total Users</div>
+          </div>
+          <div class="bg-white rounded-lg p-4 shadow text-center">
+            <div class="text-xl md:text-2xl font-bold text-blue-600">56</div>
+            <div class="text-sm text-gray-500">Active Vendors</div>
+          </div>
+          <div class="bg-white rounded-lg p-4 shadow text-center">
+            <div class="text-xl md:text-2xl font-bold text-blue-600">₹72,500</div>
+            <div class="text-sm text-gray-500">Revenue Today</div>
+          </div>
+          <div class="bg-white rounded-lg p-4 shadow text-center">
+            <div class="text-xl md:text-2xl font-bold text-blue-600">12</div>
+            <div class="text-sm text-gray-500">Pending Reports</div>
+          </div>
+        </div>
+  
+        <!-- User Activity Table Preview -->
+        <div class="bg-white rounded-lg shadow p-4 overflow-auto">
+          <h2 class="text-lg font-semibold text-gray-700 mb-3">Recent User Activity</h2>
+          <table class="w-full min-w-[500px] text-sm text-left text-gray-600">
+            <thead class="text-xs uppercase bg-gray-100">
+              <tr>
+                <th class="px-4 py-2">User</th>
+                <th class="px-4 py-2">Action</th>
+                <th class="px-4 py-2">Date</th>
+                <th class="px-4 py-2">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b">
+                <td class="px-4 py-2">Ravi Kumar</td>
+                <td class="px-4 py-2">Updated Profile</td>
+                <td class="px-4 py-2">19 Apr 2025</td>
+                <td class="px-4 py-2 text-green-600">Success</td>
+              </tr>
+              <tr class="border-b">
+                <td class="px-4 py-2">Anjali Mishra</td>
+                <td class="px-4 py-2">Reported Vendor</td>
+                <td class="px-4 py-2">19 Apr 2025</td>
+                <td class="px-4 py-2 text-yellow-500">Pending</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+  
+    <app-footer></app-footer>
+  </div>
+  

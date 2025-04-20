@@ -1,3 +1,4 @@
+import { CategoryComponent } from './pages/admin/category/category.component';
 import { RegisterComponent } from './pages/authentication/register/register.component';
 import { Routes } from '@angular/router';
 import { LoginComponent } from './pages/authentication/login/login.component';
@@ -8,6 +9,7 @@ import { HeaderComponent } from './pages/dashboard/header/header.component';
 import { vendorgaurdGuard } from './gaurds/vendorgaurd.guard';
 import { admingaurdGuard } from './gaurds/admingaurd.guard';
 import { FooterComponent } from './pages/dashboard/footer/footer.component';
+import { DashboardLayoutComponent } from './pages/dashboard/dashboard-layout/dashboard-layout.component';
 
 export const routes: Routes = [
   
@@ -20,6 +22,6 @@ export const routes: Routes = [
   {path: 'instructions', component: VendorInstructionsComponent, canActivate:[vendorgaurdGuard]},   
   {path: 'forget-password', component: ForgetPasswordComponent},
   {path: 'header', component:HeaderComponent,canActivate:[vendorgaurdGuard]},
-  { path: 'admin-dashboard', component: FooterComponent },
-  
+  { path: 'admin-dashboard', component: DashboardLayoutComponent, canActivate:[admingaurdGuard] },
+  {path: 'category', component: CategoryComponent},
 ];

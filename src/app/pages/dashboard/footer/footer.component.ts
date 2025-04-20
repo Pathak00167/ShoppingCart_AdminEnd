@@ -9,14 +9,15 @@ import { CommonModule } from '@angular/common';
   styleUrl: './footer.component.css'
 })
 export class FooterComponent {
-  
-  role:string = ''
+  sidebarOpen: boolean = false;
+desktopSidebarOpen: boolean = true;
 
-  constructor() {
-    const storedRole = sessionStorage.getItem('role');
-    if (storedRole) {
-      this.role = storedRole;
-    }
-  }
+toggleSidebar() {
+  this.sidebarOpen = !this.sidebarOpen;
+}
+
+toggleDesktopSidebar() {
+  this.desktopSidebarOpen = !this.desktopSidebarOpen;
+}
 
 }
