@@ -10,6 +10,7 @@ import { vendorgaurdGuard } from './gaurds/vendorgaurd.guard';
 import { admingaurdGuard } from './gaurds/admingaurd.guard';
 import { FooterComponent } from './pages/dashboard/footer/footer.component';
 import { DashboardLayoutComponent } from './pages/dashboard/dashboard-layout/dashboard-layout.component';
+import { AdminDashboardComponent } from './pages/admin/admin-dashboard/admin-dashboard.component';
 
 export const routes: Routes = [
   
@@ -22,6 +23,14 @@ export const routes: Routes = [
   {path: 'instructions', component: VendorInstructionsComponent, canActivate:[vendorgaurdGuard]},   
   {path: 'forget-password', component: ForgetPasswordComponent},
   {path: 'header', component:HeaderComponent,canActivate:[vendorgaurdGuard]},
-  { path: 'admin-dashboard', component: DashboardLayoutComponent, canActivate:[admingaurdGuard] },
-  {path: 'category', component: CategoryComponent},
+  { 
+    path: '', 
+    component: DashboardLayoutComponent, 
+    canActivate: [admingaurdGuard],  // Protect the dashboard routes
+    children: [
+      { path: 'admin-dashboard', component: AdminDashboardComponent },
+      { path: 'category', component: CategoryComponent },
+    ]
+  },
+
 ];

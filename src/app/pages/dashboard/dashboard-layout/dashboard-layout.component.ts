@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../header/header.component';
 import { SidenavComponent } from '../sidenav/sidenav.component';
 import { FooterComponent } from '../footer/footer.component'; 
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard-layout',
   standalone: true,
-  imports: [CommonModule,HeaderComponent,SidenavComponent,FooterComponent],
+  imports: [CommonModule,HeaderComponent,SidenavComponent,FooterComponent,RouterOutlet],
   templateUrl: './dashboard-layout.component.html',
   styleUrl: './dashboard-layout.component.css'
 })
