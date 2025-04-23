@@ -3,9 +3,13 @@
 
   <!-- Add New Category Button -->
   <div class="flex justify-between items-center mb-4">
-    <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm sm:text-base">
-      + Add New Category
-    </button>
+    <button
+  class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm sm:text-base"
+  (click)="openAddCategoryModal()"
+>
+  + Add New Category
+</button>
+
 
     <!-- Vendor Request Toggle -->
     <button onclick="document.getElementById('vendorRequests').classList.toggle('hidden')" class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-800 text-sm sm:text-base">
@@ -13,7 +17,6 @@
     </button>
   </div>
 
-  <!-- Category Grid -->
   <!-- Category Grid -->
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
     <div *ngFor="let category of categories" class="bg-white rounded-xl shadow p-4 flex flex-col items-center text-center">
@@ -23,7 +26,13 @@
         <button class="w-full bg-yellow-400 text-white py-1 rounded hover:bg-yellow-500 text-sm" >Edit</button>
         <button class="w-full bg-red-500 text-white py-1 rounded hover:bg-red-600 text-sm" >Delete</button>
         <button class="w-full bg-purple-500 text-white py-1 rounded hover:bg-purple-600 text-sm" >Add Subcategory</button>
-        <button class="w-full bg-indigo-500 text-white py-1 rounded hover:bg-indigo-600 text-sm" >View Subcategories</button>
+        <button
+        class="w-full bg-indigo-500 text-white py-1 rounded hover:bg-indigo-600 text-sm"
+        (click)="openModal()"
+      >
+        View Subcategories
+      </button>
+      
       </div>
     </div>
   </div>
@@ -73,3 +82,71 @@
     </div>
   </div>
 </div>
+
+
+<!-- Subcategory Modal -->
+<div *ngIf="showSubcategoryModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+  <div class="bg-white w-[90vw] max-w-md max-h-[80vh] rounded-xl shadow-lg p-6 overflow-y-auto">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-xl font-semibold text-gray-800">Subcategories</h2>
+      <button (click)="closeModal()" class="text-gray-600 hover:text-black text-2xl leading-none">&times;</button>
+    </div>
+
+    <!-- Search Input -->
+    <input
+      type="text"
+      [(ngModel)]="searchTerm"
+      placeholder="Search subcategory..."
+      class="w-full border border-gray-300 px-3 py-2 rounded mb-4 text-sm focus:outline-none focus:ring"
+    />
+
+    <!-- Subcategory List -->
+    <ul class="space-y-2">
+      <li *ngFor="let sub of filteredSubcategories()" class="bg-gray-100 px-3 py-2 rounded shadow-sm">
+        {{ sub.name }}
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+
+
+<!-- Add Category Modal -->
+<div *ngIf="showAddCategoryModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+  <div class="bg-white w-[90vw] max-w-md rounded-xl shadow-lg p-6">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-xl font-semibold text-gray-800">Add New Category</h2>
+      <button (click)="closeAddCategoryModal()" class="text-gray-600 hover:text-black text-2xl leading-none">&times;</button>
+    </div>
+
+    <!-- Form -->
+    <form (ngSubmit)="submitCategory()" #categoryForm="ngForm" class="space-y-4">
+      <input
+        type="text"
+        name="categoryName"
+        [(ngModel)]="newCategoryName"
+        required
+        placeholder="Category Name"
+        class="w-full border border-gray-300 px-3 py-2 rounded text-sm focus:outline-none focus:ring"
+      />
+
+      <input
+        type="file"
+        (change)="onImageSelected($event)"
+        accept="image/*"
+        class="w-full border border-gray-300 px-3 py-2 rounded text-sm focus:outline-none focus:ring"
+      />
+
+      <button
+        type="submit"
+        [disabled]="!categoryForm.valid"
+        class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm w-full"
+      >
+        Add Category
+      </button>
+    </form>
+  </div>
+</div>
+
+
