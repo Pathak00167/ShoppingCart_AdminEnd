@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule,FormsModule } from '@angular/forms';
+import { ReactiveFormsModule,FormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AdminService } from '../../../../services/admin.service';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from '../../../../environments/environment';
@@ -8,18 +8,24 @@ import { environment } from '../../../../environments/environment';
 @Component({
   selector: 'app-category',
   standalone: true,
-  imports: [CommonModule,ReactiveFormsModule,FormsModule],
+  imports: [CommonModule,ReactiveFormsModule,FormsModule,],
   templateUrl: './category.component.html',
   styleUrl: './category.component.css'
 })
 export class CategoryComponent {
+
+  AddCategory:FormGroup;
   categories:any="";
   imageUrl:string=environment.imageUrl
   showAddCategoryModal = false;
 newCategoryName = '';
 selectedCategoryImage: File | null = null;
-constructor(private service:AdminService,private toastrService:ToastrService)
+constructor(private fb:FormBuilder,private service:AdminService,private toastrService:ToastrService)
 {
+  this.AddCategory = this.fb.group({
+    categoryName: ['', [Validators.required, Validators.email]],
+    categoryIamge: ['', Validators.required],
+   });
 }
 ngOnInit(): void {debugger
   
