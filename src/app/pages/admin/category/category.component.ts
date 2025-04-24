@@ -24,7 +24,7 @@ constructor(private fb:FormBuilder,private service:AdminService,private toastrSe
 {
   this.AddCategory = this.fb.group({
     categoryName: ['', [Validators.required, Validators.email]],
-    categoryIamge: ['', Validators.required],
+    categoryIamge: [null,[ Validators.required]],
    });
 }
 ngOnInit(): void {debugger
@@ -81,6 +81,43 @@ filteredSubcategories() {
     sub.name.toLowerCase().includes(this.searchTerm.toLowerCase())
   );
 }
+
+
+showAddSubcategoryModal = false;
+selectedCategoryId: number | null = null;
+subcategoryName = '';
+subcategoryImage: File | null = null;
+
+openAddSubcategoryModal(categoryId: number) {
+  this.selectedCategoryId = categoryId;
+  this.showAddSubcategoryModal = true;
+}
+
+closeAddSubcategoryModal() {
+  this.showAddSubcategoryModal = false;
+  this.subcategoryName = '';
+  this.subcategoryImage = null;
+  this.selectedCategoryId = null;
+}
+
+onSubcategoryImageSelected(event: any) {
+  const file = event.target.files[0];
+  if (file) {
+    this.subcategoryImage = file;
+  }
+}
+
+submitSubcategory() {
+  if (this.selectedCategoryId && this.subcategoryName && this.subcategoryImage) {
+    // Replace with API logic
+    console.log('Category ID:', this.selectedCategoryId);
+    console.log('Subcategory Name:', this.subcategoryName);
+    console.log('Image:', this.subcategoryImage.name);
+
+    this.closeAddSubcategoryModal();
+  }
+}
+
 
 
   //#region   

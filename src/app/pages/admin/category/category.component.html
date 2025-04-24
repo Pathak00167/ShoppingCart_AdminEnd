@@ -25,7 +25,13 @@
       <div class="space-y-2 w-full">
         <button class="w-full bg-yellow-400 text-white py-1 rounded hover:bg-yellow-500 text-sm" >Edit</button>
         <button class="w-full bg-red-500 text-white py-1 rounded hover:bg-red-600 text-sm" >Delete</button>
-        <button class="w-full bg-purple-500 text-white py-1 rounded hover:bg-purple-600 text-sm" >Add Subcategory</button>
+        <button
+  class="w-full bg-purple-500 text-white py-1 rounded hover:bg-purple-600 text-sm"
+  (click)="openAddSubcategoryModal(category.id)"
+>
+  Add Subcategory
+</button>
+
         <button
         class="w-full bg-indigo-500 text-white py-1 rounded hover:bg-indigo-600 text-sm"
         (click)="openModal()"
@@ -110,6 +116,57 @@
 </div>
 
 
+<!-- Add Subcategory Modal -->
+<div *ngIf="showAddSubcategoryModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+  <div class="bg-white w-[90vw] max-w-md rounded-xl shadow-lg p-6">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-xl font-semibold text-gray-800">Add New Subcategory</h2>
+      <button (click)="closeAddSubcategoryModal()" class="text-gray-600 hover:text-black text-2xl leading-none">&times;</button>
+    </div>
+
+    <form (ngSubmit)="submitSubcategory()" #subcategoryForm="ngForm" class="space-y-4">
+      <!-- Category Select -->
+      <select
+        name="selectedCategoryId"
+        [(ngModel)]="selectedCategoryId"
+        required
+        class="w-full border border-gray-300 px-3 py-2 rounded text-sm"
+      >
+        <option [ngValue]="null" disabled selected>Select Category</option>
+        <option *ngFor="let cat of categories" [value]="cat.id">{{ cat.categoryName }}</option>
+      </select>
+
+      <!-- Subcategory Name -->
+      <input
+        type="text"
+        name="subcategoryName"
+        [(ngModel)]="subcategoryName"
+        required
+        placeholder="Subcategory Name"
+        class="w-full border border-gray-300 px-3 py-2 rounded text-sm"
+      />
+
+      <!-- Image Upload -->
+      <input
+        type="file"
+        (change)="onSubcategoryImageSelected($event)"
+        accept="image/*"
+        class="w-full border border-gray-300 px-3 py-2 rounded text-sm"
+      />
+
+      <button
+        type="submit"
+        [disabled]="!subcategoryForm.valid"
+        class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 text-sm w-full"
+      >
+        Add Subcategory
+      </button>
+    </form>
+  </div>
+</div>
+
+
+
 
 
 <!-- Add Category Modal -->
@@ -126,7 +183,7 @@
       <input
         type="text"
         name="categoryName"
-        [(ngModel)]="newCategoryName"
+        formControlName="categoryName"
         required
         placeholder="Category Name"
         class="w-full border border-gray-300 px-3 py-2 rounded text-sm focus:outline-none focus:ring"
