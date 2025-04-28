@@ -18,7 +18,6 @@ export class CategoryComponent {
   categories:any="";
   imageUrl:string=environment.imageUrl
   showAddCategoryModal = false;
-newCategoryName = '';
 selectedCategoryImage: File | null = null;
 constructor(private fb:FormBuilder,private service:AdminService,private toastrService:ToastrService)
 {
@@ -27,20 +26,23 @@ constructor(private fb:FormBuilder,private service:AdminService,private toastrSe
     categoryIamge: [null,[ Validators.required]],
    });
 }
-ngOnInit(): void {debugger
-  
-  
-    this.service.getCategories().subscribe({
-     next: (data) => {
-       this.categories = data;
-       console.log("Chat section data is ",data)
-     },
-     error: (error) => {
-       console.error('Error fetching users Friends:', error);
-       this.toastrService.error('Failed to load random users');
-     }
-    })
+ngOnInit(): void {
+  this.loadCategories();
 }
+
+loadCategories() {
+  this.service.getCategories().subscribe({
+    next: (data) => {
+      this.categories = data;
+      console.log("Categories loaded:", data);
+    },
+    error: (error) => {
+      console.error('Error fetching categories:', error);
+      this.toastrService.error('Failed to load categories');
+    }
+  });
+}
+
 subcategoryList = [
   { name: 'Laptops' },
   { name: 'Smartphones' },
@@ -127,27 +129,43 @@ submitSubcategory() {
   
   closeAddCategoryModal() {
     this.showAddCategoryModal = false;
-    this.newCategoryName = '';
+    this.AddCategory.reset();
     this.selectedCategoryImage = null;
   }
+
   
-  onImageSelected(event: any) {
+ 
+  onImageSelected(event: any) {debugger
     const file = event.target.files[0];
     if (file) {
       this.selectedCategoryImage = file;
+      this.AddCategory.patchValue({ categoryImage: file });
+      this.AddCategory.get('categoryImage')?.updateValueAndValidity();
     }
   }
   
-  submitCategory() {
-    if (this.newCategoryName && this.selectedCategoryImage) {
-      // Mock logic - replace with your API call
-      console.log('Category Name:', this.newCategoryName);
-      console.log('Selected Image:', this.selectedCategoryImage.name);
-  
-      // Close modal and reset
-      this.closeAddCategoryModal();
-    }
+  submitCategory() {debugger
+    
+      const formData = new FormData();
+      formData.append('categoryName', this.AddCategory.get('categoryName')?.value);
+      formData.append('categoryImage', this.selectedCategoryImage as Blob);
+
+      // Replace with your API service
+      this.service.addCategory(formData).subscribe({
+        next: (res) => {
+          this.toastrService.success('Category added successfully');
+          this.closeAddCategoryModal();
+          this.loadCategories(); // reload categories
+        },
+        error: (err) => {
+          console.error(err);
+          this.toastrService.error('Failed to add category');
+        }
+      });
+    
   }
   //#endregion
-
 }
+  
+
+

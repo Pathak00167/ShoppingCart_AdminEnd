@@ -17,4 +17,12 @@ export class AdminService {
   getCategories(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/Admin/Category`)
   }
+
+  addCategory(categoryData: FormData): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/Admin/Category`, categoryData).pipe(
+      tap((response) => {
+        console.log('Category added:', response);
+      })
+    );
+  }
 }
