@@ -177,17 +177,16 @@
       <button (click)="closeAddCategoryModal()" class="text-gray-600 hover:text-black text-2xl leading-none">&times;</button>
     </div>
 
-    <!-- Form -->
-    <form [formGroup]="AddCategory" (ngSubmit)="submitCategory()" #categoryForm="ngForm" class="space-y-4">
+    <!-- Reactive Form -->
+    <form [formGroup]="AddCategory" (ngSubmit)="submitCategory()" class="space-y-4">
       
       <input
         type="text"
-        name="categoryName"
         formControlName="categoryName"
-        required
         placeholder="Category Name"
         class="w-full border border-gray-300 px-3 py-2 rounded text-sm focus:outline-none focus:ring"
       />
+      
 
       <input
         type="file"
@@ -195,10 +194,13 @@
         accept="image/*"
         class="w-full border border-gray-300 px-3 py-2 rounded text-sm focus:outline-none focus:ring"
       />
+      <div *ngIf="AddCategory.get('categoryImage')?.touched && AddCategory.get('categoryImage')?.invalid" class="text-red-500 text-sm">
+        Category image is required
+      </div>
 
       <button
         type="submit"
-        [disabled]="!categoryForm.valid"
+        
         class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm w-full"
       >
         Add Category
@@ -206,5 +208,6 @@
     </form>
   </div>
 </div>
+
 
 
