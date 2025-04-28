@@ -4,11 +4,11 @@
       (toggleSidebarEvent)="toggleSidebar()"
     ></app-header>
   
-    <div class="flex flex-1 overflow-hidden">
+    <div class="flex flex-1 overflow-hidden ">
       <app-sidenav
         [sidebarOpen]="desktopSidebarOpen"
         [mobileSidebarOpen]="sidebarOpen"
-        (toggleSidebar)="toggleSidebar()"
+        (toggleSidebar)="toggleSidebar()" 
       ></app-sidenav>
       <main class="flex-1 p-4 md:p-6 bg-gray-50 overflow-auto">
      <router-outlet></router-outlet>

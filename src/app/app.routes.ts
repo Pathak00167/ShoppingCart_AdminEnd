@@ -11,6 +11,8 @@ import { admingaurdGuard } from './gaurds/admingaurd.guard';
 import { FooterComponent } from './pages/dashboard/footer/footer.component';
 import { DashboardLayoutComponent } from './pages/dashboard/dashboard-layout/dashboard-layout.component';
 import { AdminDashboardComponent } from './pages/admin/admin-dashboard/admin-dashboard.component';
+import { VendorsComponent } from './pages/admin/vendors/vendors.component';
+import { UsersComponent } from './pages/admin/users/users.component';
 
 export const routes: Routes = [
   
@@ -30,6 +32,8 @@ export const routes: Routes = [
     children: [
       { path: 'admin-dashboard', component: AdminDashboardComponent },
       { path: 'category', component: CategoryComponent },
+      { path: 'vendors', component: VendorsComponent },
+      { path: 'users', component: UsersComponent },
     ]
   },
 
