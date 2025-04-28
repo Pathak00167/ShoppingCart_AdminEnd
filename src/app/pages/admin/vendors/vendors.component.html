@@ -1,0 +1,102 @@
+<div class="p-6 bg-gray-100 min-h-screen">
+
+    <!-- Page Header -->
+    <div class="mb-6">
+      <h1 class="text-3xl font-bold text-gray-800">Vendor Management</h1>
+      <p class="text-gray-600">Manage and verify vendor information and documents.</p>
+    </div>
+  
+    <!-- Vendor List -->
+    <div class="bg-white p-6 rounded-lg shadow mb-8">
+      <h2 class="text-xl font-semibold text-gray-700 mb-4">Registered Vendors</h2>
+      
+      <!-- Vendor Table -->
+      <table class="w-full text-sm text-left text-gray-600">
+        <thead class="bg-gray-100 text-xs uppercase">
+          <tr>
+            <th class="px-4 py-2">Vendor ID</th>
+            <th class="px-4 py-2">Name</th>
+            <th class="px-4 py-2">Email</th>
+            <th class="px-4 py-2">GST Number</th>
+            <th class="px-4 py-2">Address</th>
+            <th class="px-4 py-2">Verification Status</th>
+            <th class="px-4 py-2">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-b">
+            <td class="px-4 py-2">V123</td>
+            <td class="px-4 py-2">John Doe</td>
+            <td class="px-4 py-2">johnexample.com</td>
+            <td class="px-4 py-2">GST123456</td>
+            <td class="px-4 py-2">1234 Main Street, City, Country</td>
+            <td class="px-4 py-2 text-yellow-500">Pending</td>
+            <td class="px-4 py-2">
+              <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Verify</button>
+              <button class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Reject</button>
+            </td>
+          </tr>
+          <tr class="border-b">
+            <td class="px-4 py-2">V124</td>
+            <td class="px-4 py-2">Jane Smith</td>
+            <td class="px-4 py-2">janeexample.com</td>
+            <td class="px-4 py-2">GST789012</td>
+            <td class="px-4 py-2">5678 Oak Avenue, City, Country</td>
+            <td class="px-4 py-2 text-green-600">Verified</td>
+            <td class="px-4 py-2">
+              <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">View</button>
+              <button class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700" disabled>Rejected</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <!-- Vendor Details and Verification -->
+    <div class="bg-white p-6 rounded-lg shadow mb-8">
+      <h2 class="text-xl font-semibold text-gray-700 mb-4">Vendor Details</h2>
+      
+      <!-- Vendor Info -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <h3 class="text-lg font-semibold text-gray-800">Vendor Name</h3>
+          <p class="text-gray-600">John Doe</p>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold text-gray-800">Email</h3>
+          <p class="text-gray-600">johnexample.com</p>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold text-gray-800">GST Number</h3>
+          <p class="text-gray-600">GST123456</p>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold text-gray-800">Vendor Address</h3>
+          <p class="text-gray-600">1234 Main Street, City, Country</p>
+        </div>
+      </div>
+  
+      <!-- Document Verification -->
+      <div class="mt-6">
+        <h3 class="text-lg font-semibold text-gray-800">Documents Verification</h3>
+        <div class="space-y-4">
+          <div class="flex justify-between">
+            <p class="text-gray-600">Address Proof</p>
+            <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">View Document</button>
+          </div>
+          <div class="flex justify-between">
+            <p class="text-gray-600">GST Certificate</p>
+            <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">View Document</button>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Action Buttons -->
+      <div class="mt-6 flex space-x-4">
+        <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Approve</button>
+        <button class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Reject</button>
+      </div>
+    </div>
+  
+  </div>
+  
