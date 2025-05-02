@@ -15,22 +15,29 @@ import { environment } from '../../../../environments/environment';
 export class CategoryComponent {
 
   AddCategory:FormGroup;
+  AddSubCategory:FormGroup;
   categories:any="";
   imageUrl:string=environment.imageUrl
   showAddCategoryModal = false;
 selectedCategoryImage: File | null = null;
+selectedSubCategoryImage:File| null =null;
 constructor(private fb:FormBuilder,private service:AdminService,private toastrService:ToastrService)
 {
   this.AddCategory = this.fb.group({
     categoryName: ['', [Validators.required, Validators.email]],
-    categoryIamge: [null,[ Validators.required]],
+    categoryIamge: [null,[ Validators.required,]],
+   });
+
+   this.AddSubCategory = this.fb.group({
+    subCategoryName:['',[Validators.required]],
+    subCategoryImage:[null,[Validators.required]]
    });
 }
 ngOnInit(): void {
   this.loadCategories();
 }
 
-loadCategories() {
+loadCategories() {debugger
   this.service.getCategories().subscribe({
     next: (data) => {
       this.categories = data;
@@ -87,7 +94,6 @@ filteredSubcategories() {
 
 showAddSubcategoryModal = false;
 selectedCategoryId: number | null = null;
-subcategoryName = '';
 subcategoryImage: File | null = null;
 
 openAddSubcategoryModal(categoryId: number) {
@@ -97,7 +103,8 @@ openAddSubcategoryModal(categoryId: number) {
 
 closeAddSubcategoryModal() {
   this.showAddSubcategoryModal = false;
-  this.subcategoryName = '';
+  this.AddSubCategory.reset();
+    this.selectedCategoryImage = null;
   this.subcategoryImage = null;
   this.selectedCategoryId = null;
 }
@@ -109,15 +116,25 @@ onSubcategoryImageSelected(event: any) {
   }
 }
 
-submitSubcategory() {
-  if (this.selectedCategoryId && this.subcategoryName && this.subcategoryImage) {
-    // Replace with API logic
-    console.log('Category ID:', this.selectedCategoryId);
-    console.log('Subcategory Name:', this.subcategoryName);
-    console.log('Image:', this.subcategoryImage.name);
+submitSubcategory() {debugger
+  const formData = new FormData();
+  formData.append('subcategoryName', this.AddSubCategory.get('subcategoryName')?.value);
+  formData.append('subCategoryImage', this.selectedSubCategoryImage as Blob);
 
-    this.closeAddSubcategoryModal();
-  }
+  // Replace with your API service
+  this.service.addCategory(formData).subscribe({
+    next: (res) => {
+      this.closeAddCategoryModal();
+      this.toastrService.success('Category added successfully');
+      this.loadCategories(); // reload categories
+    },
+    error: (err) => {
+      console.error(err);
+      this.toastrService.error('Failed to add category');
+    }
+  });
+
+
 }
 
 
@@ -135,16 +152,22 @@ submitSubcategory() {
 
   
  
-  onImageSelected(event: any) {debugger
+  onImageSelected(event: any) {
     const file = event.target.files[0];
     if (file) {
       this.selectedCategoryImage = file;
+      this.subcategoryImage = file;
+  
+      // Ensure the control name matches exactly
+      this.AddSubCategory.patchValue({ subCategoryImage: file });
+      this.AddSubCategory.get('subCategoryImage')?.updateValueAndValidity();
+  
       this.AddCategory.patchValue({ categoryImage: file });
       this.AddCategory.get('categoryImage')?.updateValueAndValidity();
     }
   }
   
-  submitCategory() {debugger
+  submitCategory() {
     
       const formData = new FormData();
       formData.append('categoryName', this.AddCategory.get('categoryName')?.value);
@@ -153,8 +176,8 @@ submitSubcategory() {
       // Replace with your API service
       this.service.addCategory(formData).subscribe({
         next: (res) => {
-          this.toastrService.success('Category added successfully');
           this.closeAddCategoryModal();
+          this.toastrService.success('Category added successfully');
           this.loadCategories(); // reload categories
         },
         error: (err) => {

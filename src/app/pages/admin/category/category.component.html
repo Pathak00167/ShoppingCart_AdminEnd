@@ -124,11 +124,11 @@
       <button (click)="closeAddSubcategoryModal()" class="text-gray-600 hover:text-black text-2xl leading-none">&times;</button>
     </div>
 
-    <form (ngSubmit)="submitSubcategory()" #subcategoryForm="ngForm" class="space-y-4">
+    <form [formGroup]="AddSubCategory" (ngSubmit)="submitSubcategory()" #subcategoryForm="ngForm" class="space-y-4">
       <!-- Category Select -->
       <select
         name="selectedCategoryId"
-        [(ngModel)]="selectedCategoryId"
+        formControlName="selectedCategoryId"
         required
         class="w-full border border-gray-300 px-3 py-2 rounded text-sm"
       >
@@ -140,7 +140,7 @@
       <input
         type="text"
         name="subcategoryName"
-        [(ngModel)]="subcategoryName"
+        formControlName="subcategoryName"
         required
         placeholder="Subcategory Name"
         class="w-full border border-gray-300 px-3 py-2 rounded text-sm"
@@ -149,14 +149,13 @@
       <!-- Image Upload -->
       <input
         type="file"
-        (change)="onSubcategoryImageSelected($event)"
+        (change)="onImageSelected($event)"
         accept="image/*"
         class="w-full border border-gray-300 px-3 py-2 rounded text-sm"
       />
 
       <button
         type="submit"
-        [disabled]="!subcategoryForm.valid"
         class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 text-sm w-full"
       >
         Add Subcategory

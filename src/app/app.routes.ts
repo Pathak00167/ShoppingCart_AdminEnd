@@ -30,10 +30,10 @@ export const routes: Routes = [
     component: DashboardLayoutComponent, 
     canActivate: [admingaurdGuard],  // Protect the dashboard routes
     children: [
-      { path: 'admin-dashboard', component: AdminDashboardComponent },
-      { path: 'category', component: CategoryComponent },
-      { path: 'vendors', component: VendorsComponent },
-      { path: 'users', component: UsersComponent },
+      { path: 'admin-dashboard', component: AdminDashboardComponent ,canActivateChild:[admingaurdGuard]},
+      { path: 'category', component: CategoryComponent,canActivateChild:[admingaurdGuard] },
+      { path: 'vendors', component: VendorsComponent,canActivateChild:[admingaurdGuard] },
+      { path: 'users', component: UsersComponent,canActivateChild:[admingaurdGuard] },
     ]
   },
 
