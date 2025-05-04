@@ -17,10 +17,13 @@ export class CategoryComponent {
   AddCategory:FormGroup;
   AddSubCategory:FormGroup;
   categories:any="";
+  SubCategories:any="";
   imageUrl:string=environment.imageUrl
   showAddCategoryModal = false;
 selectedCategoryImage: File | null = null;
 selectedSubCategoryImage:File| null =null;
+showAddSubcategoryModal = false;
+categoryId: number | null = null;
 constructor(private fb:FormBuilder,private service:AdminService,private toastrService:ToastrService)
 {
   this.AddCategory = this.fb.group({
@@ -29,12 +32,14 @@ constructor(private fb:FormBuilder,private service:AdminService,private toastrSe
    });
 
    this.AddSubCategory = this.fb.group({
-    subCategoryName:['',[Validators.required]],
+    categoryId: [null, [Validators.required]],
+    subCategoryName:['',[Validators.required, Validators.email]],
     subCategoryImage:[null,[Validators.required]]
    });
 }
 ngOnInit(): void {
   this.loadCategories();
+ 
 }
 
 loadCategories() {debugger
@@ -50,34 +55,24 @@ loadCategories() {debugger
   });
 }
 
-subcategoryList = [
-  { name: 'Laptops' },
-  { name: 'Smartphones' },
-  { name: 'Headphones' },
-  { name: 'Watches' },
-  { name: 'Chargers' },
-  { name: 'Accessories' },
-  { name: 'Gaming Consoles' },
-  { name: 'Gaming Consoles' },
-  { name: 'Gaming Consoles' },
-  { name: 'Gaming Consoles' },
-  { name: 'Gaming Consoles' },
-  { name: 'Gaming Consoles' },
-  { name: 'Gaming Consoles' },
-  { name: 'Gaming Consoles' },
-  { name: 'Gaming Consoles' },
-  { name: 'Gaming Consoles' },
-  { name: 'Gaming Consoles' },
-  { name: 'Gaming Consoles' },
-  { name: 'Gaming Consoles' },
-  { name: 'Gaming Consoles' },
-  { name: 'Gaming Consoles' },
-];
+loadSubCategories(id:Number) {debugger
+  this.service.getSubCategories(id).subscribe({
+    next: (data) => {
+      this.SubCategories = data;
+      console.log("SubCategories loaded:", data);
+    },
+    error: (error) => {
+      console.error('Error fetching categories:', error);
+      this.toastrService.error('Failed to load categories');
+    }
+  });
+}
 
 searchTerm = '';
 showSubcategoryModal = false;
 
-openModal() {
+openModal(categoryId: number) {debugger
+  this.loadSubCategories(categoryId);
   this.showSubcategoryModal = true;
 }
 
@@ -86,46 +81,51 @@ closeModal() {
 }
 
 filteredSubcategories() {
-  return this.subcategoryList.filter(sub =>
-    sub.name.toLowerCase().includes(this.searchTerm.toLowerCase())
-  );
+  // return this.submitCategory.filter(sub =>
+  //   sub.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+  // );
 }
 
 
-showAddSubcategoryModal = false;
-selectedCategoryId: number | null = null;
-subcategoryImage: File | null = null;
+getCategoryNameById(id: number | null): string {
+  if (id === null) {
+    return '';
+  }
+  const category = this.categories.find((cat: any) => cat.categoryId === id);
+  return category ? category.categoryName : '';
+}
 
-openAddSubcategoryModal(categoryId: number) {
-  this.selectedCategoryId = categoryId;
+
+
+
+
+openAddSubcategoryModal(categoryId: number) {debugger
+  this.categoryId = categoryId;
   this.showAddSubcategoryModal = true;
+  this.AddSubCategory.patchValue({ categoryId: categoryId });
 }
+
 
 closeAddSubcategoryModal() {
   this.showAddSubcategoryModal = false;
   this.AddSubCategory.reset();
     this.selectedCategoryImage = null;
-  this.subcategoryImage = null;
-  this.selectedCategoryId = null;
-}
-
-onSubcategoryImageSelected(event: any) {
-  const file = event.target.files[0];
-  if (file) {
-    this.subcategoryImage = file;
-  }
+  this.selectedCategoryImage = null;
+  this.categoryId = null;
 }
 
 submitSubcategory() {debugger
   const formData = new FormData();
-  formData.append('subcategoryName', this.AddSubCategory.get('subcategoryName')?.value);
+  formData.append('categoryId', this.AddSubCategory.get('categoryId')?.value);
+  formData.append('subCategoryName', this.AddSubCategory.get('subCategoryName')?.value);
   formData.append('subCategoryImage', this.selectedSubCategoryImage as Blob);
 
   // Replace with your API service
-  this.service.addCategory(formData).subscribe({
+  this.service.addSubCategory(formData).subscribe({
     next: (res) => {
-      this.closeAddCategoryModal();
       this.toastrService.success('Category added successfully');
+      this.closeAddSubcategoryModal();
+      
       this.loadCategories(); // reload categories
     },
     error: (err) => {
@@ -152,11 +152,11 @@ submitSubcategory() {debugger
 
   
  
-  onImageSelected(event: any) {
+  onImageSelected(event: any) {debugger
     const file = event.target.files[0];
     if (file) {
       this.selectedCategoryImage = file;
-      this.subcategoryImage = file;
+      this.selectedSubCategoryImage=file
   
       // Ensure the control name matches exactly
       this.AddSubCategory.patchValue({ subCategoryImage: file });
@@ -167,7 +167,7 @@ submitSubcategory() {debugger
     }
   }
   
-  submitCategory() {
+  submitCategory() {debugger
     
       const formData = new FormData();
       formData.append('categoryName', this.AddCategory.get('categoryName')?.value);

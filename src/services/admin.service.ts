@@ -18,10 +18,22 @@ export class AdminService {
     return this.http.get<any>(`${this.apiUrl}/Admin/Category`)
   }
 
+  getSubCategories(categoryId :Number): Observable<any> {debugger
+    return this.http.get<any>(`${this.apiUrl}/Admin/SubCategory/${categoryId}`) 
+  }
+
   addCategory(categoryData: FormData): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/Admin/Category`, categoryData).pipe(
       tap((response) => {
         console.log('Category added:', response);
+      })
+    );
+  }
+
+  addSubCategory(subCategoryData: FormData): Observable<any> {debugger
+    return this.http.post<any>(`${this.apiUrl}/Admin/SubCategory`, subCategoryData).pipe(
+      tap((response) => {
+        console.log('Subcategory added:', response);
       })
     );
   }
