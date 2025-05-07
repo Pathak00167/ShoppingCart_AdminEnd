@@ -6,7 +6,6 @@ import { RouterLink } from '@angular/router';
   standalone: true,
   imports: [RouterLink],
   templateUrl: './vendor-instructions.component.html',
-  styleUrl: './vendor-instructions.component.css'
 })
 export class VendorInstructionsComponent {
 

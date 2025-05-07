@@ -10,7 +10,6 @@ import { RouterOutlet } from '@angular/router';
   standalone: true,
   imports: [CommonModule,HeaderComponent,SidenavComponent,FooterComponent,RouterOutlet],
   templateUrl: './dashboard-layout.component.html',
-  styleUrl: './dashboard-layout.component.css'
 })
 export class DashboardLayoutComponent {
   sidebarOpen = false;

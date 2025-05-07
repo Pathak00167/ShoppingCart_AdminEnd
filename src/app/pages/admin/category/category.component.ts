@@ -10,7 +10,6 @@ import { environment } from '../../../../environments/environment';
   standalone: true,
   imports: [CommonModule,ReactiveFormsModule,FormsModule,],
   templateUrl: './category.component.html',
-  styleUrl: './category.component.css'
 })
 export class CategoryComponent {
 

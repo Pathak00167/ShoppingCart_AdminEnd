@@ -5,7 +5,6 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './verificationpending.component.html',
-  styleUrl: './verificationpending.component.css'
 })
 export class VerificationpendingComponent {
 

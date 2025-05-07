@@ -9,8 +9,7 @@ import { Route } from '@angular/router';
   selector: 'app-login',
   standalone: true,
   imports: [RouterLink,ReactiveFormsModule,CommonModule],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  templateUrl: './login.component.html', 
 })
 export class LoginComponent {
   loginForm: FormGroup;
@@ -38,6 +37,7 @@ onLogin() {
         this.router.navigate(['instruction']);
       
       } else if (response?.role === 'Vendor') {
+        
         // Save the token and navigate to the user dashboard
         sessionStorage.setItem('token', response.token);
         sessionStorage.setItem('role', response.role);

@@ -6,7 +6,6 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './users.component.html',
-  styleUrl: './users.component.css'
 })
 export class UsersComponent implements OnInit {
   

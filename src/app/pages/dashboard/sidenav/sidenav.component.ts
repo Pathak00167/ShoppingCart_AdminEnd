@@ -8,7 +8,6 @@ import { RouterLink } from '@angular/router';
   standalone: true,
   imports: [CommonModule,RouterLink],
   templateUrl: './sidenav.component.html',
-  styleUrl: './sidenav.component.css'
 })
 export class SidenavComponent {
   @Input() sidebarOpen: boolean = true;

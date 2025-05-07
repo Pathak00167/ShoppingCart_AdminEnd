@@ -5,7 +5,6 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './vendordocuments.component.html',
-  styleUrl: './vendordocuments.component.css'
 })
 export class VendordocumentsComponent {
 

@@ -6,7 +6,6 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [],
   templateUrl: './emailverification.component.html',
-  styleUrl: './emailverification.component.css'
 })
 export class EmailverificationComponent {
   otp: string = '';
