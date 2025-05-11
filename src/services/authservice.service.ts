@@ -16,5 +16,13 @@ export class AuthserviceService {
   login(credentials: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/Auth/login`, credentials)
   }
+
+  Register(credentials: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/Auth/RegisterVendor`, credentials)
+  }
+
+  confirmEmail(credentials: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/Auth/ConfirmEmail`, credentials)
+  }
 }
 

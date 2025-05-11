@@ -13,6 +13,10 @@ import { DashboardLayoutComponent } from './pages/dashboard/dashboard-layout/das
 import { AdminDashboardComponent } from './pages/admin/admin-dashboard/admin-dashboard.component';
 import { VendorsComponent } from './pages/admin/vendors/vendors.component';
 import { UsersComponent } from './pages/admin/users/users.component';
+import { EmailverificationComponent } from './pages/authentication/emailverification/emailverification.component';
+import { verificationgaurdGuard } from './gaurds/verificationgaurd.guard';
+import { VendostoreinfoComponent } from './pages/vendor/vendostoreinfo/vendostoreinfo.component';
+import { VendoraddressComponent } from './pages/vendor/vendoraddress/vendoraddress.component';
 
 export const routes: Routes = [
   
@@ -25,6 +29,10 @@ export const routes: Routes = [
   {path: 'instructions', component: VendorInstructionsComponent, canActivate:[vendorgaurdGuard]},   
   {path: 'forget-password', component: ForgetPasswordComponent},
   {path: 'header', component:HeaderComponent,canActivate:[vendorgaurdGuard]},
+  {path: 'otp-verification', component:EmailverificationComponent,canActivate:[verificationgaurdGuard]},
+  {path: 'vendor-verification', component:VendostoreinfoComponent,canActivate:[verificationgaurdGuard]},
+    {path: 'vendor-Address', component:VendoraddressComponent,canActivate:[verificationgaurdGuard]},
+
   { 
     path: '', 
     component: DashboardLayoutComponent, 

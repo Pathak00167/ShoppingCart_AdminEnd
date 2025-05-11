@@ -7,7 +7,6 @@ import { Input,Output,EventEmitter } from '@angular/core';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
 })
 export class HeaderComponent {
   @Input() sidebarOpen: boolean = true;
