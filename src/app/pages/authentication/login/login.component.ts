@@ -38,10 +38,37 @@ onLogin() {
       
       } else if (response?.role === 'Vendor') {
         
-        // Save the token and navigate to the user dashboard
-        sessionStorage.setItem('token', response.token);
+       if(response.message == 'Email Verification Is Pending')
+        {
+          sessionStorage.setItem('token', response.token);
         sessionStorage.setItem('role', response.role);
-        this.router.navigate(['instructions']); // Optional: navigate somewhere for users
+        sessionStorage.setItem("VendorState",'Verification')
+          this.router.navigate(['otp-verification']);
+        }
+
+        else if(response.message == 'Vendor Documentaion Is Pending')
+        {
+          sessionStorage.setItem('token', response.token);
+        sessionStorage.setItem('role', response.role);
+        sessionStorage.setItem("VendorState",'Verification')
+        this.router.navigate(['vendor-verification']); // Optional: navigate somewhere for users
+        }
+
+        else if(response.message == 'Vendor Address Is Pending')
+        {
+          sessionStorage.setItem('token', response.token);
+        sessionStorage.setItem('role', response.role);
+        sessionStorage.setItem("VendorState",'Verification')
+        this.router.navigate(['vendor-Address']); // Optional: navigate somewhere for users
+        }
+
+        else 
+        {
+           sessionStorage.setItem('token', response.token);
+        sessionStorage.setItem('role', response.role);
+        this.router.navigate(['vendor-dashboard']); 
+        }
+        
       
       } else {
         this.errorMessage = 'Access denied. Only admin can log in.';
