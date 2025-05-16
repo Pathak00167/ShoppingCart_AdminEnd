@@ -23,7 +23,15 @@ export class VendorService {
     );
   }
 
-  getUserIdFromToken(): string  {
+   VendorAddressInfo(vendorData: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/Vendor/VendorShopAddress`, vendorData).pipe(
+      tap((response) => {
+        console.log('Category added:', response);
+      })
+    );
+  }
+
+  getUserIdFromToken(): string  {debugger
   const token = sessionStorage.getItem('token');
   if (token) {
     const decodedToken: any = jwtDecode(token);

@@ -85,25 +85,12 @@
           </svg>
           PostCode
         </label>
-        <input [(ngModel)]="postcode" name="postcode" type="text" maxlength="4" placeholder="Enter 4-digit postcode"
+        <input [(ngModel)]="postcode" name="postcode" type="text" maxlength="6" minlength="6" placeholder="Enter 6-digit postcode"
           class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-black focus:border-black">
       </div>
 
-      <!-- Address Proof Upload -->
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
-          <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round"
-              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-          </svg>
-          Address Proof <span class="text-red-500">*</span>
-        </label>
-        <input [(ngModel)]="addressProof" name="addressProof" type="file" accept=".pdf,image/*"
-          class="w-full border border-gray-300 rounded-lg px-4 py-2 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-black file:text-white hover:file:bg-gray-800 focus:outline-none">
-      </div>
-
       <!-- Submit Button -->
-      <button type="submit"
+      <button type="submit" (click)="submitAddress()"
         class="w-full bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition duration-200">Save
         Address</button>
 

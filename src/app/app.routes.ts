@@ -17,6 +17,7 @@ import { EmailverificationComponent } from './pages/authentication/emailverifica
 import { verificationgaurdGuard } from './gaurds/verificationgaurd.guard';
 import { VendostoreinfoComponent } from './pages/vendor/vendostoreinfo/vendostoreinfo.component';
 import { VendoraddressComponent } from './pages/vendor/vendoraddress/vendoraddress.component';
+import { VendordocumentsComponent } from './pages/vendor/vendordocuments/vendordocuments.component';
 
 export const routes: Routes = [
   
@@ -32,6 +33,7 @@ export const routes: Routes = [
   {path: 'otp-verification', component:EmailverificationComponent,canActivate:[verificationgaurdGuard]},
   {path: 'vendor-verification', component:VendostoreinfoComponent,canActivate:[verificationgaurdGuard]},
     {path: 'vendor-Address', component:VendoraddressComponent,canActivate:[verificationgaurdGuard]},
+   {path: 'vendor-documents', component:VendordocumentsComponent,canActivate:[verificationgaurdGuard]},
 
   { 
     path: '', 
