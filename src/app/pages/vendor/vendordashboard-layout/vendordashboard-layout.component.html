@@ -1,0 +1,20 @@
+<div class="flex flex-col min-h-screen" [ngClass]="{ 'sidebar-collapsed': !desktopSidebarOpen }">
+    <app-header
+      [sidebarOpen]="desktopSidebarOpen"
+      (toggleSidebarEvent)="toggleSidebar()"
+    ></app-header>
+  
+    <div class="flex flex-1 overflow-hidden ">
+      <app-sidenav
+        [sidebarOpen]="desktopSidebarOpen"
+        [mobileSidebarOpen]="sidebarOpen"
+        (toggleSidebar)="toggleSidebar()" 
+      ></app-sidenav>
+      <main class="flex-1 p-4 md:p-6 bg-gray-50 overflow-auto">
+     <router-outlet></router-outlet>
+    </main>
+    </div>
+  
+    <app-footer></app-footer>
+  </div>
+  

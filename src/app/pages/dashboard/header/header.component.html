@@ -1,5 +1,13 @@
-<header class="bg-blue-600 text-white shadow-md px-4 md:px-6 py-4 flex justify-between items-center">
-  <div class="text-lg md:text-xl font-bold">Admin Panel</div>
+<header
+  class="text-white shadow-md px-4 md:px-6 py-4 flex justify-between items-center"
+  [ngClass]="{
+    'bg-blue-600': userRole === 'admin',
+    'bg-green-600': userRole === 'vendor'
+  }"
+>
+  <div class="text-lg md:text-xl font-bold">
+    {{ userRole === 'admin' ? 'Admin Panel' : 'Vendor Panel' }}
+  </div>
 
   <!-- Desktop Sidebar Toggle -->
   <button class="hidden md:block text-white" (click)="toggleSidebar()">

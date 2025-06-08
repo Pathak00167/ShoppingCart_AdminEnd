@@ -62,11 +62,19 @@ onLogin() {
         this.router.navigate(['vendor-Address']); // Optional: navigate somewhere for users
         }
 
+         else if(response.message == 'Vendor Documents Is Pending')
+        {
+          sessionStorage.setItem('token', response.token);
+        sessionStorage.setItem('role', response.role);
+        sessionStorage.setItem("VendorState",'Verification')
+        this.router.navigate(['vendor-documents']); // Optional: navigate somewhere for users
+        }
+
         else 
         {
            sessionStorage.setItem('token', response.token);
         sessionStorage.setItem('role', response.role);
-        this.router.navigate(['vendor-dashboard']); 
+        this.router.navigate(['instructions']); 
         }
         
       

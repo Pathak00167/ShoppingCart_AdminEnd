@@ -23,6 +23,14 @@ export class VendorService {
     );
   }
 
+  VendorDocuments(vendorData: FormData): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/Vendor/VendorBusinessDocuments`, vendorData).pipe(
+      tap((response) => {
+        console.log('Category added:', response);
+      })
+    );
+  }
+
    VendorAddressInfo(vendorData: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/Vendor/VendorShopAddress`, vendorData).pipe(
       tap((response) => {

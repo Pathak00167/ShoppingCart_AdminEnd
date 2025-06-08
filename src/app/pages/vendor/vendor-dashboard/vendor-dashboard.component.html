@@ -1,0 +1,177 @@
+<div class="p-6 bg-gray-100 min-h-screen">
+
+  <!-- Welcome -->
+  <div class="mb-6">
+    <h1 class="text-3xl font-bold text-gray-800">Welcome, Vendor!</h1>
+    <p class="text-gray-600">Here’s a snapshot of your store's activity today.</p>
+  </div>
+
+  <!-- Quick Stats Cards -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+    <div class="bg-white p-6 rounded-lg shadow text-center">
+      <div class="text-2xl font-bold text-green-600">135</div>
+      <div class="text-gray-500 mt-2">Products Listed</div>
+    </div>
+    <div class="bg-white p-6 rounded-lg shadow text-center">
+      <div class="text-2xl font-bold text-blue-600">28</div>
+      <div class="text-gray-500 mt-2">Orders Today</div>
+    </div>
+    <div class="bg-white p-6 rounded-lg shadow text-center">
+      <div class="text-2xl font-bold text-purple-600">₹12,400</div>
+      <div class="text-gray-500 mt-2">Earnings Today</div>
+    </div>
+    <div class="bg-white p-6 rounded-lg shadow text-center">
+      <div class="text-2xl font-bold text-red-500">4</div>
+      <div class="text-gray-500 mt-2">Pending Shipments</div>
+    </div>
+  </div>
+
+  <!-- Charts Section -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+    <div class="bg-white p-6 rounded-lg shadow">
+      <h2 class="text-lg font-semibold text-gray-700 mb-4">Earnings (Last 7 Days)</h2>
+      <div class="h-48 bg-gray-200 flex items-center justify-center rounded">
+        [ Earnings Chart Placeholder ]
+      </div>
+    </div>
+    <div class="bg-white p-6 rounded-lg shadow">
+      <h2 class="text-lg font-semibold text-gray-700 mb-4">Order Volume</h2>
+      <div class="h-48 bg-gray-200 flex items-center justify-center rounded">
+        [ Order Volume Chart Placeholder ]
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Orders and Pending Listings -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+    <div class="bg-white p-6 rounded-lg shadow overflow-auto">
+      <h2 class="text-lg font-semibold text-gray-700 mb-3">Recent Orders</h2>
+      <table class="w-full min-w-[500px] text-sm text-left text-gray-600">
+        <thead class="bg-gray-100 text-xs uppercase">
+          <tr>
+            <th class="px-4 py-2">Customer</th>
+            <th class="px-4 py-2">Product</th>
+            <th class="px-4 py-2">Date</th>
+            <th class="px-4 py-2">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-b">
+            <td class="px-4 py-2">Neha Sharma</td>
+            <td class="px-4 py-2">Wireless Headphones</td>
+            <td class="px-4 py-2">06 Jun 2025</td>
+            <td class="px-4 py-2 text-green-600">Shipped</td>
+          </tr>
+          <tr class="border-b">
+            <td class="px-4 py-2">Kunal Mehta</td>
+            <td class="px-4 py-2">Bluetooth Speaker</td>
+            <td class="px-4 py-2">06 Jun 2025</td>
+            <td class="px-4 py-2 text-yellow-500">Pending</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow">
+      <h2 class="text-lg font-semibold text-gray-700 mb-3">Pending Listings</h2>
+      <ul class="space-y-3 text-sm">
+        <li class="flex justify-between items-center">
+          <span>Smartwatch - GenX</span>
+          <span class="text-yellow-500">Review Pending</span>
+        </li>
+        <li class="flex justify-between items-center">
+          <span>Fitness Band - Ultra</span>
+          <span class="text-yellow-500">Under Moderation</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Support Tickets and Inventory Alerts -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+    <div class="bg-white p-6 rounded-lg shadow">
+      <h2 class="text-lg font-semibold text-gray-700 mb-3">Support Tickets</h2>
+      <ul class="space-y-3 text-sm">
+        <li class="flex justify-between items-center">
+          <span>Ticket #879 - Delivery Delay</span>
+          <span class="text-red-500">High</span>
+        </li>
+        <li class="flex justify-between items-center">
+          <span>Ticket #882 - Return Request</span>
+          <span class="text-yellow-500">Medium</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow">
+      <h2 class="text-lg font-semibold text-gray-700 mb-3">Inventory Alerts</h2>
+      <ul class="space-y-3 text-sm">
+        <li class="flex justify-between items-center">
+          <span>USB-C Cables</span>
+          <span class="text-red-500">Low Stock</span>
+        </li>
+        <li class="flex justify-between items-center">
+          <span>Wireless Mouse</span>
+          <span class="text-yellow-500">Reorder Soon</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Vendor Task List -->
+  <div class="bg-white p-6 rounded-lg shadow mb-8">
+    <h2 class="text-lg font-semibold text-gray-700 mb-3">Today's Tasks</h2>
+    <ul class="list-disc ml-5 space-y-2 text-sm text-gray-600">
+      <li>Ship all pending orders</li>
+      <li>Update product stock quantities</li>
+      <li>Respond to customer inquiries</li>
+      <li>Upload new product listings</li>
+    </ul>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+    <div class="bg-purple-600 p-6 rounded-lg text-center text-white">
+      <button class="w-full py-3 font-semibold">Add Product</button>
+    </div>
+    <div class="bg-blue-600 p-6 rounded-lg text-center text-white">
+      <button class="w-full py-3 font-semibold">View Orders</button>
+    </div>
+    <div class="bg-green-600 p-6 rounded-lg text-center text-white">
+      <button class="w-full py-3 font-semibold">Check Earnings</button>
+    </div>
+    <div class="bg-red-600 p-6 rounded-lg text-center text-white">
+      <button class="w-full py-3 font-semibold">Contact Support</button>
+    </div>
+  </div>
+
+  <!-- Notifications -->
+  <div class="bg-white p-6 rounded-lg shadow mb-8">
+    <h2 class="text-lg font-semibold text-gray-700 mb-3">Notifications</h2>
+    <ul class="space-y-3 text-sm">
+      <li class="flex justify-between items-center">
+        <span>Order #1213 is ready for dispatch.</span>
+        <span class="text-green-500">Ready</span>
+      </li>
+      <li class="flex justify-between items-center">
+        <span>Stock for “Wireless Mouse” is below threshold.</span>
+        <span class="text-red-500">Urgent</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- System Info -->
+  <div class="bg-white p-6 rounded-lg shadow mb-8">
+    <h2 class="text-lg font-semibold text-gray-700 mb-3">Platform Updates</h2>
+    <ul class="space-y-3 text-sm">
+      <li class="flex justify-between items-center">
+        <span>Vendor dashboard improvements released.</span>
+        <span class="text-green-500">Live</span>
+      </li>
+      <li class="flex justify-between items-center">
+        <span>New payout system available.</span>
+        <span class="text-blue-500">Update</span>
+      </li>
+    </ul>
+  </div>
+</div>

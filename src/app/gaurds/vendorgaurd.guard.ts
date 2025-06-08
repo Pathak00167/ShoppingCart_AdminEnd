@@ -4,7 +4,7 @@ import { inject } from '@angular/core';
 export const vendorgaurdGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
   var findrole = sessionStorage.getItem("role")
-if(findrole == "Admin")
+if(findrole == "Vendor")
 {
   return true;
 }

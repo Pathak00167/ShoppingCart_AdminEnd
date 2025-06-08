@@ -1,46 +1,96 @@
 <!-- Mobile Sidebar -->
 <div
-  class="md:hidden fixed top-16 left-0 w-full bg-blue-500 text-white px-4 py-4 transform transition-transform duration-300 ease-in-out z-50"
-  [ngClass]="{ '-translate-x-full': !mobileSidebarOpen, 'translate-x-0': mobileSidebarOpen }"
+  class="md:hidden fixed top-16 left-0 w-full px-4 py-4 transform transition-transform duration-300 ease-in-out z-50"
+  [ngClass]="{
+    '-translate-x-full': !mobileSidebarOpen,
+    'translate-x-0': mobileSidebarOpen,
+    'bg-blue-500 text-white': userRole === 'admin',
+    'bg-green-600 text-white': userRole === 'vendor'
+  }"
 >
-  <a [routerLink]="['admin-dashboard']" class="block py-2 border-b border-white">Dashboard</a>
-  <a [routerLink]="['category']" class="block py-2 border-b border-white">Category</a>
-  <a [routerLink]="['users']" class="block py-2 border-b border-white">Users</a>
-  <a [routerLink]="['vendors']" class="block py-2 border-b border-white">Vendors</a>
-  <a href="#" class="block py-2 border-b border-white">Reports</a>
-  <a href="#" class="block py-2">Logout</a>
+  <ng-container *ngIf="userRole === 'admin'">
+    <a [routerLink]="['admin-dashboard']" class="block py-2 border-b border-white">Dashboard</a>
+    <a [routerLink]="['category']" class="block py-2 border-b border-white">Category</a>
+    <a [routerLink]="['users']" class="block py-2 border-b border-white">Users</a>
+    <a [routerLink]="['vendors']" class="block py-2 border-b border-white">Vendors</a>
+    <a href="#" class="block py-2 border-b border-white">Reports</a>
+  </ng-container>
+
+  <ng-container *ngIf="userRole === 'vendor'">
+    <a [routerLink]="['vendor-dashboard']" class="block py-2 border-b border-white">Dashboard</a>
+    <a [routerLink]="['vendor-products']" class="block py-2 border-b border-white">Products</a>
+    <a [routerLink]="['vendor-orders']" class="block py-2 border-b border-white">Orders</a>
+    <a [routerLink]="['vendor-documents']" class="block py-2 border-b border-white">Documents</a>
+  </ng-container>
+
+  <a [routerLink]="['/logout']" class="block py-2">Logout</a>
 </div>
 
 <!-- Desktop Sidebar -->
 <aside
-  class="hidden  md:block bg-white shadow-lg p-4 space-y-4 border-r transition-all duration-300 h-full flex-shrink-0"
-  [ngClass]="{ 'w-64': sidebarOpen, 'w-16': !sidebarOpen }"
+  class="hidden md:block shadow-lg p-4 space-y-4 border-r transition-all duration-300 h-full flex-shrink-0"
+  [ngClass]="{
+    'w-64': sidebarOpen,
+    'w-16': !sidebarOpen,
+    'bg-white': userRole === 'admin',
+    'bg-green-50': userRole === 'vendor'
+  }"
 >
-  <h2 *ngIf="sidebarOpen" class="text-xl font-semibold text-blue-600 mb-4">Admin Navigation</h2>
+  <h2 *ngIf="sidebarOpen" class="text-xl font-semibold mb-4"
+      [ngClass]="{ 'text-blue-600': userRole === 'admin', 'text-green-700': userRole === 'vendor' }">
+    {{ userRole === 'admin' ? 'Admin Navigation' : 'Vendor Navigation' }}
+  </h2>
+
   <nav class="space-y-2">
-    <a [routerLink]="['admin-dashboard']" class="flex items-center py-2 px-2 md:px-4 rounded-lg hover:bg-blue-100 text-gray-700 font-medium">
-      <i class="fas fa-tachometer-alt mr-2"></i>
-      <span *ngIf="sidebarOpen">Dashboard</span>
-    </a>
-    <a [routerLink]="['category']" class="flex items-center py-2 px-2 md:px-4 rounded-lg hover:bg-blue-100 text-gray-700 font-medium">
-      <i class="fas fa-tags mr-2"></i>
-      <span *ngIf="sidebarOpen">Category</span>
-    </a>
-    <a [routerLink]="['users']" class="flex items-center py-2 px-2 md:px-4 rounded-lg hover:bg-blue-100 text-gray-700 font-medium">
-      <i class="fas fa-users mr-2"></i>
-      <span *ngIf="sidebarOpen">Users</span>
-    </a>
-    <a [routerLink]="['vendors']" class="flex items-center py-2 px-2 md:px-4 rounded-lg hover:bg-blue-100 text-gray-700 font-medium">
-      <i class="fas fa-store mr-2"></i>
-      <span *ngIf="sidebarOpen">Vendors</span>
-    </a>
-    <a href="#" class="flex items-center py-2 px-2 md:px-4 rounded-lg hover:bg-blue-100 text-gray-700 font-medium">
-      <i class="fas fa-chart-line mr-2"></i>
-      <span *ngIf="sidebarOpen">Reports</span>
-    </a>
-    <a href="#" class="flex items-center py-2 px-2 md:px-4 rounded-lg hover:bg-blue-100 text-gray-700 font-medium">
-      <i class="fas fa-cogs mr-2"></i>
-      <span *ngIf="sidebarOpen">Settings</span>
+    <ng-container *ngIf="userRole === 'admin'">
+      <a [routerLink]="['admin-dashboard']" class="flex items-center py-2 px-2 md:px-4 rounded-lg hover:bg-blue-100 text-gray-700 font-medium">
+        <i class="fas fa-tachometer-alt mr-2"></i>
+        <span *ngIf="sidebarOpen">Dashboard</span>
+      </a>
+      <a [routerLink]="['category']" class="flex items-center py-2 px-2 md:px-4 rounded-lg hover:bg-blue-100 text-gray-700 font-medium">
+        <i class="fas fa-tags mr-2"></i>
+        <span *ngIf="sidebarOpen">Category</span>
+      </a>
+      <a [routerLink]="['users']" class="flex items-center py-2 px-2 md:px-4 rounded-lg hover:bg-blue-100 text-gray-700 font-medium">
+        <i class="fas fa-users mr-2"></i>
+        <span *ngIf="sidebarOpen">Users</span>
+      </a>
+      <a [routerLink]="['vendors']" class="flex items-center py-2 px-2 md:px-4 rounded-lg hover:bg-blue-100 text-gray-700 font-medium">
+        <i class="fas fa-store mr-2"></i>
+        <span *ngIf="sidebarOpen">Vendors</span>
+      </a>
+      <a href="#" class="flex items-center py-2 px-2 md:px-4 rounded-lg hover:bg-blue-100 text-gray-700 font-medium">
+        <i class="fas fa-chart-line mr-2"></i>
+        <span *ngIf="sidebarOpen">Reports</span>
+      </a>
+      <a href="#" class="flex items-center py-2 px-2 md:px-4 rounded-lg hover:bg-blue-100 text-gray-700 font-medium">
+        <i class="fas fa-cogs mr-2"></i>
+        <span *ngIf="sidebarOpen">Settings</span>
+      </a>
+    </ng-container>
+
+    <ng-container *ngIf="userRole === 'vendor'">
+      <a [routerLink]="['vendor-dashboard']" class="flex items-center py-2 px-2 md:px-4 rounded-lg hover:bg-green-100 text-gray-700 font-medium">
+        <i class="fas fa-home mr-2"></i>
+        <span *ngIf="sidebarOpen">Dashboard</span>
+      </a>
+      <a [routerLink]="['/vendor/product']" class="flex items-center py-2 px-2 md:px-4 rounded-lg hover:bg-green-100 text-gray-700 font-medium">
+        <i class="fas fa-box mr-2"></i>
+        <span *ngIf="sidebarOpen">Products</span>
+      </a>
+      <a [routerLink]="['vendor-orders']" class="flex items-center py-2 px-2 md:px-4 rounded-lg hover:bg-green-100 text-gray-700 font-medium">
+        <i class="fas fa-shopping-cart mr-2"></i>
+        <span *ngIf="sidebarOpen">Orders</span>
+      </a>
+      <a [routerLink]="['vendor-documents']" class="flex items-center py-2 px-2 md:px-4 rounded-lg hover:bg-green-100 text-gray-700 font-medium">
+        <i class="fas fa-file-alt mr-2"></i>
+        <span *ngIf="sidebarOpen">Documents</span>
+      </a>
+    </ng-container>
+
+    <a [routerLink]="['/logout']" class="flex items-center py-2 px-2 md:px-4 rounded-lg hover:bg-gray-200 text-gray-700 font-medium">
+      <i class="fas fa-sign-out-alt mr-2"></i>
+      <span *ngIf="sidebarOpen">Logout</span>
     </a>
   </nav>
 </aside>

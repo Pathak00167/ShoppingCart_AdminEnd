@@ -1,3 +1,4 @@
+import { VerificationpendingComponent } from './pages/vendor/verificationpending/verificationpending.component';
 import { CategoryComponent } from './pages/admin/category/category.component';
 import { RegisterComponent } from './pages/authentication/register/register.component';
 import { Routes } from '@angular/router';
@@ -18,6 +19,9 @@ import { verificationgaurdGuard } from './gaurds/verificationgaurd.guard';
 import { VendostoreinfoComponent } from './pages/vendor/vendostoreinfo/vendostoreinfo.component';
 import { VendoraddressComponent } from './pages/vendor/vendoraddress/vendoraddress.component';
 import { VendordocumentsComponent } from './pages/vendor/vendordocuments/vendordocuments.component';
+import { VendorDashboardComponent } from './pages/vendor/vendor-dashboard/vendor-dashboard.component';
+import { VendordashboardLayoutComponent } from './pages/vendor/vendordashboard-layout/vendordashboard-layout.component';
+import { ProductsComponent } from './pages/vendor/products/products.component';
 
 export const routes: Routes = [
   
@@ -34,6 +38,7 @@ export const routes: Routes = [
   {path: 'vendor-verification', component:VendostoreinfoComponent,canActivate:[verificationgaurdGuard]},
     {path: 'vendor-Address', component:VendoraddressComponent,canActivate:[verificationgaurdGuard]},
    {path: 'vendor-documents', component:VendordocumentsComponent,canActivate:[verificationgaurdGuard]},
+   {path: 'vendor-AdminApproval', component:VerificationpendingComponent,canActivate:[verificationgaurdGuard]},
 
   { 
     path: '', 
@@ -41,10 +46,25 @@ export const routes: Routes = [
     canActivate: [admingaurdGuard],  // Protect the dashboard routes
     children: [
       { path: 'admin-dashboard', component: AdminDashboardComponent ,canActivateChild:[admingaurdGuard]},
+     
       { path: 'category', component: CategoryComponent,canActivateChild:[admingaurdGuard] },
       { path: 'vendors', component: VendorsComponent,canActivateChild:[admingaurdGuard] },
       { path: 'users', component: UsersComponent,canActivateChild:[admingaurdGuard] },
     ]
   },
 
+    { 
+    path: 'vendor', 
+    component: VendordashboardLayoutComponent, 
+    canActivate: [vendorgaurdGuard],  // Protect the dashboard routes
+    children: [
+      { path: 'vendor-dashboard', component: VendorDashboardComponent ,canActivateChild:[vendorgaurdGuard]},
+      { path: 'product', component: ProductsComponent,canActivateChild:[vendorgaurdGuard] },
+      { path: 'vendors', component: VendorsComponent,canActivateChild:[vendorgaurdGuard] },
+      { path: 'users', component: UsersComponent,canActivateChild:[vendorgaurdGuard] },
+    ]
+  },
+
+
+  
 ];
