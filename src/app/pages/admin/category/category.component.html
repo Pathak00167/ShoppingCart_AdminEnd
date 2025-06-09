@@ -4,12 +4,11 @@
   <!-- Add New Category Button -->
   <div class="flex justify-between items-center mb-4">
     <button
-  class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm sm:text-base"
-  (click)="openAddCategoryModal()"
->
-  + Add New Category
-</button>
-
+      class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm sm:text-base"
+      (click)="openAddCategoryModal()"
+    >
+      + Add New Category
+    </button>
 
     <!-- Vendor Request Toggle -->
     <button onclick="document.getElementById('vendorRequests').classList.toggle('hidden')" class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-800 text-sm sm:text-base">
@@ -26,26 +25,22 @@
         <button class="w-full bg-yellow-400 text-white py-1 rounded hover:bg-yellow-500 text-sm" >Edit</button>
         <button class="w-full bg-red-500 text-white py-1 rounded hover:bg-red-600 text-sm" >Delete</button>
         <button
-  class="w-full bg-purple-500 text-white py-1 rounded hover:bg-purple-600 text-sm"
-  (click)="openAddSubcategoryModal(category.categoryId)"
->
-  Add Subcategory
-</button>
-
+          class="w-full bg-purple-500 text-white py-1 rounded hover:bg-purple-600 text-sm"
+          (click)="openAddSubcategoryModal(category.categoryId)"
+        >
+          Add Subcategory
+        </button>
         <button
-        class="w-full bg-indigo-500 text-white py-1 rounded hover:bg-indigo-600 text-sm"
-        (click)="openModal(category.categoryId)"
-      >
-        View Subcategories
-      </button>
-      
+          class="w-full bg-indigo-500 text-white py-1 rounded hover:bg-indigo-600 text-sm"
+          (click)="openModal(category.categoryId)"
+        >
+          View Subcategories
+        </button>
       </div>
     </div>
   </div>
-  
 
-
-  <!-- Vendor Requests Section (Hidden by Default) -->
+  <!-- Vendor Requests Section -->
   <div id="vendorRequests" class="hidden bg-white shadow rounded-lg p-4">
     <div class="flex justify-between items-center mb-4">
       <h2 class="text-xl font-semibold text-gray-700">Vendor Category/Subcategory Requests</h2>
@@ -89,7 +84,6 @@
   </div>
 </div>
 
-
 <!-- Subcategory Modal -->
 <div *ngIf="showSubcategoryModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
   <div class="bg-white w-[90vw] max-w-md max-h-[80vh] rounded-xl shadow-lg p-6 overflow-y-auto">
@@ -97,52 +91,38 @@
       <h2 class="text-xl font-semibold text-gray-800">Subcategories</h2>
       <button (click)="closeModal()" class="text-gray-600 hover:text-black text-2xl leading-none">&times;</button>
     </div>
-
-    <!-- Search Input -->
     <input
       type="text"
       [(ngModel)]="searchTerm"
       placeholder="Search subcategory..."
       class="w-full border border-gray-300 px-3 py-2 rounded mb-4 text-sm focus:outline-none focus:ring"
     />
-
-    <!-- Subcategory List -->
     <ul class="space-y-2">
       <li *ngFor="let sub of SubCategories" class="bg-gray-100 px-3 py-2 rounded shadow-sm flex items-center space-x-3">
-        <!-- Image -->
         <img [src]="imageUrl + sub.subCategoryImage" alt="{{ sub.subCategoryName }}" class="w-10 h-10 rounded object-cover border border-gray-300" />
-    
-        <!-- Subcategory Name -->
         <span class="text-gray-800 text-sm font-medium">{{ sub.subCategoryName }}</span>
       </li>
     </ul>
   </div>
 </div>
 
-
 <!-- Add Subcategory Modal -->
 <div *ngIf="showAddSubcategoryModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-  <div class="bg-white w-[90vw] max-w-md rounded-xl shadow-lg p-6">
+  <div class="bg-white w-[90vw] max-w-md rounded-xl shadow-lg p-6 overflow-y-auto max-h-[55vh]">
     <div class="flex justify-between items-center mb-4">
       <h2 class="text-xl font-semibold text-gray-800">Add New Subcategory</h2>
       <button (click)="closeAddSubcategoryModal()" class="text-gray-600 hover:text-black text-2xl leading-none">&times;</button>
     </div>
 
-    <form [formGroup]="AddSubCategory" (ngSubmit)="submitSubcategory()"  class="space-y-4">
-      <!-- Category Select -->
-     <!-- Hidden input to store ID (for form submission) -->
-<input type="hidden" formControlName="categoryId" />
-
-<!-- Readonly textbox to show the category name -->
-<input
-  type="text"
-  [value]="getCategoryNameById(categoryId)"
-  class="w-full border border-gray-300 px-3 py-2 rounded text-sm bg-gray-100 cursor-not-allowed"
-  readonly
-/>
-
-    
-    
+    <form [formGroup]="AddSubCategory" (ngSubmit)="submitSubcategory()" class="space-y-4">
+      <!-- Hidden category ID and name display -->
+      <input type="hidden" formControlName="categoryId" />
+      <input
+        type="text"
+        [value]="getCategoryNameById(categoryId)"
+        class="w-full border border-gray-300 px-3 py-2 rounded text-sm bg-gray-100 cursor-not-allowed"
+        readonly
+      />
 
       <!-- Subcategory Name -->
       <input
@@ -161,6 +141,53 @@
         class="w-full border border-gray-300 px-3 py-2 rounded text-sm"
       />
 
+      <!-- Core Attributes Section -->
+     <div formArrayName="coreAttributes" class="space-y-4">
+  <div
+    *ngFor="let attr of coreAttributes.controls; let i = index"
+    [formGroupName]="i"
+    class="border border-gray-200 rounded p-3 relative pr-6 pt-6"
+  >
+    <!-- Remove Button Positioned at Top-Right -->
+    <button
+      type="button"
+      (click)="removeCoreAttribute(i)"
+      class="absolute top-2 right-2 text-red-500 hover:text-red-700 text-lg"
+      title="Remove Attribute"
+    >
+      &times;
+    </button>
+
+    <!-- Inputs -->
+    <input
+      formControlName="attributeName"
+      placeholder="Attribute Name"
+      class="w-full border px-2 py-1 mb-2 text-sm rounded"
+    />
+    <input
+      formControlName="dataType"
+      placeholder="Data Type"
+      class="w-full border px-2 py-1 mb-2 text-sm rounded"
+    />
+    <input
+      formControlName="possibleValues"
+      placeholder="Possible Values (comma-separated)"
+      class="w-full border px-2 py-1 text-sm rounded"
+    />
+  </div>
+
+  <!-- Add Attribute Button -->
+  <button
+    type="button"
+    (click)="addCoreAttribute()"
+    class="text-blue-600 hover:underline text-sm mt-2"
+  >
+    + Add Attribute
+  </button>
+</div>
+
+
+      <!-- Submit Button -->
       <button
         type="submit"
         class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 text-sm w-full"
@@ -173,8 +200,6 @@
 
 
 
-
-
 <!-- Add Category Modal -->
 <div *ngIf="showAddCategoryModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
   <div class="bg-white w-[90vw] max-w-md rounded-xl shadow-lg p-6">
@@ -182,18 +207,13 @@
       <h2 class="text-xl font-semibold text-gray-800">Add New Category</h2>
       <button (click)="closeAddCategoryModal()" class="text-gray-600 hover:text-black text-2xl leading-none">&times;</button>
     </div>
-
-    <!-- Reactive Form -->
     <form [formGroup]="AddCategory" (ngSubmit)="submitCategory()" class="space-y-4">
-      
       <input
         type="text"
         formControlName="categoryName"
         placeholder="Category Name"
         class="w-full border border-gray-300 px-3 py-2 rounded text-sm focus:outline-none focus:ring"
       />
-      
-
       <input
         type="file"
         (change)="onImageSelected($event)"
@@ -203,10 +223,8 @@
       <div *ngIf="AddCategory.get('categoryImage')?.touched && AddCategory.get('categoryImage')?.invalid" class="text-red-500 text-sm">
         Category image is required
       </div>
-
       <button
         type="submit"
-        
         class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm w-full"
       >
         Add Category
@@ -214,6 +232,3 @@
     </form>
   </div>
 </div>
-
-
-

@@ -1,0 +1,43 @@
+<div class="p-6 bg-gray-100 min-h-screen">
+  <h1 class="text-2xl font-bold text-gray-800 mb-6">All Products (Admin View)</h1>
+
+  <!-- Vendor Filter Dropdown -->
+  <div class="mb-6">
+    <label class="block mb-1 text-gray-600 font-medium">Filter by Vendor</label>
+    <select [(ngModel)]="selectedVendor" class="border rounded p-2 w-full max-w-sm bg-white shadow-sm">
+      <option value="">All Vendors</option>
+      <option *ngFor="let vendor of vendors" [value]="vendor.id">
+        {{ vendor.name }}
+      </option>
+    </select>
+  </div>
+
+  <!-- Product Grid -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <div *ngFor="let product of filteredProducts()" class="bg-white rounded-xl shadow hover:shadow-lg overflow-hidden">
+      <img src="images/Hello-bro.svg" alt="Product Image" class="w-full h-48 object-cover" />
+
+      <div class="p-4 flex flex-col justify-between h-[270px]">
+        <div>
+          <h2 class="text-lg font-semibold text-gray-800 truncate">{{ product.name }}</h2>
+          <p class="text-sm text-gray-500">Vendor: {{ product.vendorName }}</p>
+          <p class="text-sm text-gray-500">Category: {{ product.category }}</p>
+          <p class="text-green-600 font-bold text-xl">₹{{ product.price }}</p>
+          <p class="text-sm text-gray-600 line-clamp-2">{{ product.description }}</p>
+          <p class="text-sm font-medium mt-2" [ngClass]="product.inStock ? 'text-green-500' : 'text-red-500'">
+            {{ product.inStock ? 'In Stock' : 'Out of Stock' }}
+          </p>
+        </div>
+
+        <div class="mt-4 flex justify-between gap-2">
+          <button class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 text-sm w-full">
+            Edit
+          </button>
+          <button class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 text-sm w-full">
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -22,6 +22,7 @@ import { VendordocumentsComponent } from './pages/vendor/vendordocuments/vendord
 import { VendorDashboardComponent } from './pages/vendor/vendor-dashboard/vendor-dashboard.component';
 import { VendordashboardLayoutComponent } from './pages/vendor/vendordashboard-layout/vendordashboard-layout.component';
 import { ProductsComponent } from './pages/vendor/products/products.component';
+import { VendorProductsComponent } from './pages/admin/vendor-products/vendor-products.component';
 
 export const routes: Routes = [
   
@@ -50,6 +51,7 @@ export const routes: Routes = [
       { path: 'category', component: CategoryComponent,canActivateChild:[admingaurdGuard] },
       { path: 'vendors', component: VendorsComponent,canActivateChild:[admingaurdGuard] },
       { path: 'users', component: UsersComponent,canActivateChild:[admingaurdGuard] },
+       { path: 'vendor-products', component: VendorProductsComponent,canActivateChild:[admingaurdGuard] },
     ]
   },
 
