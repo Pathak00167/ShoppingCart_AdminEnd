@@ -1,27 +1,63 @@
-<div class="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-  <div class="bg-white rounded-2xl shadow-lg p-8 w-full max-w-md text-center">
-    <h1 class="text-2xl font-bold mb-4 text-gray-800">Verify Your Email</h1>
-    <p class="text-gray-600 mb-6">Please enter the OTP sent to your email to verify your account.</p>
+<div class="p-6 bg-gray-100 min-h-screen">
 
-    <div class="space-y-4">
-      <input
-        type="text"
-        class="w-full border border-gray-300 rounded-xl px-4 py-2 text-center text-lg tracking-widest focus:outline-none"
-        placeholder="Enter 6-digit OTP"
-        disabled
-      />
-
-      <button
-        class="w-full bg-blue-600 text-white font-semibold py-2 rounded-xl cursor-not-allowed opacity-60"
-        disabled
-      >
-        Verify OTP
-      </button>
+    <!-- Page Header -->
+    <div class="mb-6">
+      <h1 class="text-3xl font-bold text-gray-800">Vendor Management</h1>
+      <p class="text-gray-600">Manage and control Vendor accounts and their status.</p>
     </div>
+  
+    <!-- User List -->
+  <div class="bg-white p-6 rounded-lg shadow mb-8">
+  <h2 class="text-xl font-semibold text-gray-700 mb-4">Registered Vendors</h2>
 
-    <div class="mt-6 text-sm text-gray-600">
-      Didn't receive the code?
-      <span class="text-blue-600 font-medium cursor-not-allowed opacity-60">Resend OTP</span>
-    </div>
+  <!-- User Table -->
+  <div class="overflow-x-auto">
+    <table class="w-full text-sm text-left text-gray-600">
+      <thead class="bg-gray-100 text-xs uppercase">
+        <tr>
+          <th class="px-4 py-2">Profile</th> <!-- New Column -->
+          <th class="px-4 py-2">User ID</th>
+          <th class="px-4 py-2">Name</th>
+          <th class="px-4 py-2">Email</th>
+          <th class="px-4 py-2">Status</th>
+          <th class="px-4 py-2">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="border-b" *ngFor="let vendor of vendors">
+          <td class="px-4 py-2">
+            <img 
+              src="images/Curious-bro.svg" 
+              alt="Profile Image" 
+              class="w-10 h-10 rounded-full object-cover border"
+            />
+          </td>
+          <td class="px-4 py-2">{{ vendor.userId }}</td>
+          <td class="px-4 py-2">{{ vendor.firstName }}</td>
+          <td class="px-4 py-2">{{ vendor.email }}</td>
+          <td class="px-4 py-2">{{ vendor.role }}</td>
+          <td 
+            class="px-4 py-2" 
+            [ngClass]="{
+              'text-yellow-500': vendor.status === 'Inactive', 
+              'text-green-600': vendor.status === 'Active'
+            }">
+            {{ vendor.status }}
+          </td>
+          <td class="px-4 py-2">
+            <div class="flex space-x-2">
+              <button *ngIf="vendor.status === 'Inactive'" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full sm:w-auto">Activate</button>
+              <button *ngIf="vendor.status === 'Active'" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 w-full sm:w-auto" disabled>Active</button>
+              <button *ngIf="vendor.status === 'Active'" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 w-full sm:w-auto">Deactivate</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
+
+  
+    <!-- User Details Modal (Optional, can be added later for detailed view) -->
+  </div>
+  

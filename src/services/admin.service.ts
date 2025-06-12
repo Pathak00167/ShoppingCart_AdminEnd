@@ -37,4 +37,10 @@ export class AdminService {
       })
     );
   }
+
+ getVendors(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/Admin/Vendor`)
+  }
+
+  
 }
