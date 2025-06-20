@@ -4,6 +4,7 @@ import { ReactiveFormsModule, FormsModule, FormGroup, FormBuilder, Validators, F
 import { AdminService } from '../../../../services/admin.service';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from '../../../../environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-category',
@@ -31,7 +32,8 @@ export class CategoryComponent {
   constructor(
     private fb: FormBuilder,
     private service: AdminService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private router:Router
   ) {
     this.AddCategory = this.fb.group({
       categoryName: ['', [Validators.required]],
@@ -175,10 +177,11 @@ export class CategoryComponent {
     });
   }
 
-  loadSubCategories(id: number) {
+  loadSubCategories(id: number) {debugger
     this.service.getSubCategories(id).subscribe({
       next: (data) => {
         this.SubCategories = data;
+        console.log(data);
       },
       error: (error) => {
         console.error('Error fetching subcategories:', error);
@@ -187,9 +190,10 @@ export class CategoryComponent {
     });
   }
 
-  openModal(categoryId: number) {
-    this.loadSubCategories(categoryId);
-    this.showSubcategoryModal = true;
+  GetSubCategory(categoryId: number) {
+     this.router.navigate(['/subcategory-details'], {
+    state: { categoryId }
+  });
   }
 
   closeModal() {
@@ -201,5 +205,41 @@ export class CategoryComponent {
     const category = this.categories.find((cat: any) => cat.categoryId === id);
     return category ? category.categoryName : '';
   }
+
+newAttribute = {
+  name: '',
+  type: '',
+  optionsString: ''
+};
+
+addAttribute(sub: any) {
+  if (!this.newAttribute.name || !this.newAttribute.type) return;
+
+  const attr = {
+    name: this.newAttribute.name,
+    type: this.newAttribute.type,
+    options: this.newAttribute.type === 'Dropdown'
+      ? this.newAttribute.optionsString.split(',').map(x => x.trim())
+      : []
+  };
+
+  if (!sub.coreAttributes) sub.coreAttributes = [];
+  sub.coreAttributes.push(attr);
+
+  // Reset form
+  this.newAttribute = { name: '', type: '', optionsString: '' };
+}
+
+removeAttribute(sub: any, index: number) {
+  sub.coreAttributes.splice(index, 1);
+}
+
+saveSubcategoryAttributes() {
+  // this.service.updateSubcategoryAttributes(this.SubCategories).subscribe({
+  //   next: () => this.toastrService.success('Changes saved!'),
+  //   error: () => this.toastrService.error('Error saving changes'),
+  // });
+}
+
   //#endregion
 }

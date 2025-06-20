@@ -18,7 +18,7 @@ export class AdminService {
     return this.http.get<any>(`${this.apiUrl}/Admin/Category`)
   }
 
-  getSubCategories(categoryId :Number): Observable<any> {debugger
+  getSubCategories(categoryId :Number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/Admin/SubCategory/${categoryId}`) 
   }
 
@@ -30,7 +30,7 @@ export class AdminService {
     );
   }
 
-  addSubCategory(subCategoryData: FormData): Observable<any> {debugger
+  addSubCategory(subCategoryData: FormData): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/Admin/SubCategory`, subCategoryData).pipe(
       tap((response) => {
         console.log('Subcategory added:', response);

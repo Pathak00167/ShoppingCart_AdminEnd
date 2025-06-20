@@ -39,7 +39,7 @@ export class VendorService {
     );
   }
 
-  getUserIdFromToken(): string  {debugger
+  getUserIdFromToken(): string  {
   const token = sessionStorage.getItem('token');
   if (token) {
     const decodedToken: any = jwtDecode(token);
