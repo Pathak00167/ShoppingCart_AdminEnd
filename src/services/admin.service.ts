@@ -22,6 +22,11 @@ export class AdminService {
     return this.http.get<any>(`${this.apiUrl}/Admin/SubCategory/${categoryId}`) 
   }
 
+  getCoreAttributes(subId: number) {
+  return this.http.get(`${this.apiUrl}/Admin/GetCoreAttributes/${subId}`);
+}
+
+
   addCategory(categoryData: FormData): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/Admin/Category`, categoryData).pipe(
       tap((response) => {
