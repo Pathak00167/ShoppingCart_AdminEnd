@@ -12,6 +12,9 @@ import { AdminService } from '../../../../services/admin.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { environment } from '../../../../environments/environment';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../state/app.state';
+import { setSelectedId } from '../../../state/app.actions';
 
 @Component({
   selector: 'app-subcategory',
@@ -36,7 +39,8 @@ export class SubcategoryComponent implements OnInit {
     private fb: FormBuilder,
     private service: AdminService,
     private toastrService: ToastrService,
-    private router: Router
+    private router: Router,
+      private store: Store<{ app: AppState }>
   ) {
     const navigation = this.router.getCurrentNavigation();
     const state = navigation?.extras.state as { categoryId: number };
@@ -118,8 +122,9 @@ export class SubcategoryComponent implements OnInit {
 }
 
 GetSubCategory(subCategoryId: number) {
+  this.store.dispatch(setSelectedId({ id: subCategoryId }));
      this.router.navigate(['/core-attributes'], {
-    state: { subCategoryId }
+    // state: { subCategoryId }
   });
   }
 

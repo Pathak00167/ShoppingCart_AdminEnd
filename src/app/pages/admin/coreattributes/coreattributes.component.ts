@@ -1,8 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AdminService } from '../../../../services/admin.service';
 import { ToastrService } from 'ngx-toastr';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../state/app.state';
+import { selectSelectedCategoryId } from '../../../state/app.selector';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-core-attributes',
@@ -10,27 +14,29 @@ import { ToastrService } from 'ngx-toastr';
   imports: [CommonModule],
   templateUrl: './coreattributes.component.html',
 })
-export class CoreAttributesComponent implements OnInit {
+export class CoreAttributesComponent implements OnInit, OnDestroy {
   subCategoryId: number | null = null;
   coreAttributes: any = [];
+  private sub$: Subscription | undefined;
 
   constructor(
     private router: Router,
     private service: AdminService,
-    private toastr: ToastrService
-  ) {
-    const nav = this.router.getCurrentNavigation();
-    const state = nav?.extras.state as { subCategoryId: number };
-    this.subCategoryId = state?.subCategoryId ?? null;
-  }
+    private toastr: ToastrService,
+    private store: Store<{ app: AppState }>
+  ) {}
 
   ngOnInit(): void {
-    if (this.subCategoryId) {
-      this.loadCoreAttributes(this.subCategoryId);
-    } else {
-      this.toastr.error('Subcategory ID is missing');
-      this.router.navigate(['/subcategory']);
-    }
+    this.sub$ = this.store.select(selectSelectedCategoryId).subscribe((id) => {
+      this.subCategoryId = id;
+
+      if (id !== null) {
+        this.loadCoreAttributes(id);
+      } else {
+        this.toastr.error('Subcategory ID is missing');
+        this.router.navigate(['/subcategory']);
+      }
+    });
   }
 
   loadCoreAttributes(subId: number) {
@@ -47,5 +53,9 @@ export class CoreAttributesComponent implements OnInit {
 
   goBack() {
     this.router.navigate(['/subcategory']);
+  }
+
+  ngOnDestroy(): void {
+    this.sub$?.unsubscribe();
   }
 }
