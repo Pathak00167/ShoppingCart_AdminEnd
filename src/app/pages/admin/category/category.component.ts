@@ -5,6 +5,9 @@ import { AdminService } from '../../../../services/admin.service';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from '../../../../environments/environment';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../state/app.state';
+import { setSelectedId } from '../../../state/app.actions';
 
 @Component({
   selector: 'app-category',
@@ -33,7 +36,8 @@ export class CategoryComponent {
     private fb: FormBuilder,
     private service: AdminService,
     private toastrService: ToastrService,
-    private router:Router
+    private router:Router,
+    private store: Store<{ app: AppState }>
   ) {
     this.AddCategory = this.fb.group({
       categoryName: ['', [Validators.required]],
@@ -190,9 +194,15 @@ export class CategoryComponent {
     });
   }
 
-  GetSubCategory(categoryId: number) {
+  GetSubCategory(catId: number) {
+    if(catId === null) {
+      this.toastrService.error('Category ID is missing');
+      return;
+    }
+    // Store the selected subcategory ID in the state
+     this.store.dispatch(setSelectedId({ id: catId }));
      this.router.navigate(['/subcategory-details'], {
-    state: { categoryId }
+    state: { catId }
   });
   }
 

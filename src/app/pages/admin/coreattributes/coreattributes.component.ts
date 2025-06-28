@@ -52,7 +52,7 @@ export class CoreAttributesComponent implements OnInit, OnDestroy {
   }
 
   goBack() {
-    this.router.navigate(['/subcategory']);
+    this.router.navigate(['/subcategory-details']);
   }
 
   ngOnDestroy(): void {

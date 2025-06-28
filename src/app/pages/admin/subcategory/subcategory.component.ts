@@ -15,6 +15,8 @@ import { environment } from '../../../../environments/environment';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../state/app.state';
 import { setSelectedId } from '../../../state/app.actions';
+import { Subscription } from 'rxjs';
+import { selectSelectedCategoryId } from '../../../state/app.selector';
 
 @Component({
   selector: 'app-subcategory',
@@ -33,6 +35,7 @@ export class SubcategoryComponent implements OnInit {
   searchTerm = '';
   showSubcategoryModal = false;
   imagePreviewUrl: string | null = null;
+  private sub$: Subscription | undefined;
 
 
   constructor(
@@ -48,6 +51,9 @@ export class SubcategoryComponent implements OnInit {
   }
 
   ngOnInit(): void {
+this.sub$ = this.store.select(selectSelectedCategoryId).subscribe((id) => {
+      this.categoryId = id;
+})
     if (this.categoryId !== null) {
       this.loadSubCategories(this.categoryId);
     }
@@ -161,6 +167,6 @@ GetSubCategory(subCategoryId: number) {
     });
   }
   goBackToCategories() {
-    window.history.back();
+    this.router.navigate(['/category']);
   }
 }
