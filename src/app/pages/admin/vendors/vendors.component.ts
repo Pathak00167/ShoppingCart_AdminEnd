@@ -29,7 +29,7 @@ vendors: any[] = [];
         console.log(data)
         console.log(data.vendors);
 
-        this.vendors = data.vendors.vendors; // ✅ now this.vendors is an array
+        this.vendors = data.vendors // ✅ now this.vendors is an array
       },
       error: (error) => {
         console.error('Error fetching vendors:', error);
