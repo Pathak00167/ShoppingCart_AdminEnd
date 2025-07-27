@@ -14,11 +14,17 @@ import { Route } from '@angular/router';
 export class LoginComponent {
   loginForm: FormGroup;
   errorMessage: string | null = null;
+  showPassword: boolean = false;
+
 constructor(private fb: FormBuilder,private service:AuthserviceService, private router:Router) 
 { 
   this.loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
-    password: ['', Validators.required],
+     password: ['', [
+    Validators.required,
+    Validators.minLength(6),
+    // Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/)
+  ]]
   });
 }
 

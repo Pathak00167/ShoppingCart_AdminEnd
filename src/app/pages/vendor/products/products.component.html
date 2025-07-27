@@ -3,12 +3,15 @@
   <div class="flex flex-col md:flex-row justify-between items-center mb-8">
     <h1 class="text-3xl font-bold text-gray-800">Vendor - Product Listing</h1>
     <div class="mt-4 md:mt-0 flex flex-wrap gap-3">
-      <button class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition text-sm">
-        + Add New Product
-      </button>
-      <button class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition text-sm">
-        + Request Category
-      </button>
+    <button (click)="openAddProductModal()"
+        class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition text-sm">
+  + Add New Product
+</button>
+
+<button class="bg-emerald-600 text-white px-4 py-2 rounded hover:bg-emerald-700 transition text-sm">
+  + Request SubCategory
+</button>
+
     </div>
   </div>
 
@@ -97,4 +100,270 @@
 </div>
 
 
+</div>
+
+<!-- Add Product Modal -->
+<!-- Add Product Modal -->
+<div *ngIf="showAddProductModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
+  <div class="bg-white w-[95vw] max-w-4xl rounded-xl shadow-2xl p-6 relative max-h-[90vh] overflow-y-auto">
+    <!-- Close Button -->
+    <button (click)="closeAddProductModal()" class="absolute top-4 right-4 text-2xl text-gray-500 hover:text-gray-700 transition">
+      &times;
+    </button>
+
+    <div class="flex items-center gap-3 mb-6">
+      <div class="bg-blue-100 p-2 rounded-full">
+        <span class="text-blue-600 text-xl">📦</span>
+      </div>
+      <h2 class="text-2xl font-bold text-gray-800">Add New Product</h2>
+    </div>
+
+    <form [formGroup]="productForm" (ngSubmit)="submitProduct()" class="space-y-6">
+      <!-- Basic Product Info -->
+      <div class="bg-blue-50/50 p-5 rounded-xl border border-blue-100">
+        <div class="flex items-center gap-2 mb-4">
+          <span class="text-blue-500">📝</span>
+          <h3 class="text-lg font-semibold text-gray-700">Basic Information</h3>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div>
+            <label class=" text-sm font-medium text-gray-700 mb-2 flex items-center gap-1">
+              <span>📂</span> Subcategory
+            </label>
+            <select formControlName="subCategoryId" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 bg-white focus:ring-2 focus:ring-blue-200 focus:border-blue-500 transition">
+              <option value="">Select Subcategory</option>
+              <option value="1">📱 Electronics - Smartphones</option>
+              <option value="2">💻 Electronics - Laptops</option>
+              <option value="3">👕 Fashion - T-Shirts</option>
+            </select>
+            <div *ngIf="productForm.get('subCategoryId')?.touched && productForm.get('subCategoryId')?.errors?.['required']" class="text-red-500 text-xs mt-1 flex items-center gap-1">
+              <span>⚠️</span> Subcategory is required
+            </div>
+          </div>
+
+          <div>
+            <label class=" text-sm font-medium text-gray-700 mb-2 flex items-center gap-1">
+              <span>🏷️</span> Brand
+            </label>
+            <input type="text" formControlName="brand" placeholder="e.g. Apple, Nike" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 bg-white focus:ring-2 focus:ring-blue-200 focus:border-blue-500 transition">
+            <div *ngIf="productForm.get('brand')?.touched && productForm.get('brand')?.errors?.['required']" class="text-red-500 text-xs mt-1 flex items-center gap-1">
+              <span>⚠️</span> Brand is required
+            </div>
+          </div>
+
+          <div>
+            <label class=" text-sm font-medium text-gray-700 mb-2 flex items-center gap-1">
+              <span>🛍️</span> Product Name
+            </label>
+            <input type="text" formControlName="productName" placeholder="e.g. iPhone 15 Pro Max" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 bg-white focus:ring-2 focus:ring-blue-200 focus:border-blue-500 transition">
+            <div *ngIf="productForm.get('productName')?.touched && productForm.get('productName')?.errors?.['required']" class="text-red-500 text-xs mt-1 flex items-center gap-1">
+              <span>⚠️</span> Product name is required
+            </div>
+          </div>
+
+          <div>
+            <label class=" text-sm font-medium text-gray-700 mb-2 flex items-center gap-1">
+              <span>🖼️</span> Thumbnail Image
+            </label>
+            <div class="relative">
+              <input type="file" (change)="onFileSelected($event, 'thumbnail')" accept="image/*" class="w-full opacity-0 absolute z-10 h-full cursor-pointer">
+              <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center bg-gray-50 hover:bg-gray-100 transition">
+                <div class="flex flex-col items-center justify-center gap-2">
+                  <span class="text-gray-400 text-2xl">📤</span>
+                  <p class="text-sm text-gray-600">Click to upload product thumbnail</p>
+                  <p class="text-xs text-gray-400">Recommended: 800x800px, PNG/JPG</p>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="productForm.get('thumbnailImage')?.touched && productForm.get('thumbnailImage')?.errors?.['required']" class="text-red-500 text-xs mt-1 flex items-center gap-1">
+              <span>⚠️</span> Thumbnail image is required
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-5">
+          <label class=" text-sm font-medium text-gray-700 mb-2 flex items-center gap-1">
+            <span>📄</span> Description
+          </label>
+          <textarea formControlName="description" rows="3" placeholder="Describe your product in detail..." class="w-full border border-gray-200 rounded-lg px-4 py-2.5 bg-white focus:ring-2 focus:ring-blue-200 focus:border-blue-500 transition"></textarea>
+          <div *ngIf="productForm.get('description')?.touched && productForm.get('description')?.errors?.['required']" class="text-red-500 text-xs mt-1 flex items-center gap-1">
+            <span>⚠️</span> Description is required
+          </div>
+        </div>
+      </div>
+
+      <!-- Variants Section -->
+      <div class="bg-purple-50/50 p-5 rounded-xl border border-purple-100">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-2">
+            <span class="text-purple-500">🎨</span>
+            <h3 class="text-lg font-semibold text-gray-700">Product Variants</h3>
+          </div>
+          <button type="button" (click)="addVariant()" class="flex items-center gap-1 text-purple-600 hover:text-purple-800 text-sm font-medium">
+            <span>➕</span> Add Variant
+          </button>
+        </div>
+        
+        <div formArrayName="variants">
+          <div *ngFor="let variant of variants.controls; let i = index" [formGroupName]="i" class="mb-6 p-5 bg-white rounded-lg border border-gray-200 shadow-sm">
+            <div class="flex justify-between items-center mb-4">
+              <h4 class="font-medium text-gray-700 flex items-center gap-2">
+                <span class="bg-purple-100 text-purple-600 p-1.5 rounded-full">#{{i + 1}}</span>
+                Variant Options
+              </h4>
+              <button *ngIf="variants.length > 1" type="button" (click)="removeVariant(i)" class="text-red-500 hover:text-red-700 text-sm flex items-center gap-1">
+                <span>🗑️</span> Remove
+              </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-5">
+              <!-- Color Picker -->
+              <div>
+                <label class=" text-sm font-medium text-gray-700 mb-2 flex items-center gap-1">
+                  <span>🎨</span> Color
+                </label>
+                <div class="flex items-center gap-3">
+                  <div class="relative">
+                    <input type="color" 
+                           formControlName="colorHex"
+                           #colorInput
+                           (change)="onColorChange(colorInput.value, i)"
+                           class="w-10 h-10 p-0 border border-gray-300 rounded-lg cursor-pointer appearance-none">
+                    <div class="absolute inset-0 pointer-events-none flex items-center justify-center">
+                      <div class="w-8 h-8 rounded border border-white/20" 
+                           [style.background]="variant.value.colorHex || '#6d28d9'"></div>
+                    </div>
+                  </div>
+                  
+                  <div class="flex-1">
+                    <input type="text"
+                           formControlName="colorName"
+                           class="w-full border border-gray-200 rounded-lg px-4 py-2.5 bg-white focus:ring-2 focus:ring-blue-200 focus:border-blue-500 transition"
+                           placeholder="Color name" readonly>
+                    <div *ngIf="variant.get('colorName')?.touched && variant.get('colorName')?.errors?.['required']" 
+                         class="text-red-500 text-xs mt-1 flex items-center gap-1">
+                      <span>⚠️</span> Color name is required
+                    </div>
+                  </div>
+                </div>
+                <div class="mt-1 text-xs text-gray-500 flex items-center gap-1">
+                  <span>👆</span> Hex: {{variant.value.colorHex || '#6d28d9'}}
+                </div>
+              </div>
+
+              <div>
+                <label class=" text-sm font-medium text-gray-700 mb-2 flex items-center gap-1">
+                  <span>💰</span> Price (₹)
+                </label>
+                <div class="relative">
+                  <input type="number" formControlName="price" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 bg-white pl-8 focus:ring-2 focus:ring-blue-200 focus:border-blue-500 transition">
+                  <span class="absolute left-3 top-3 text-gray-400">₹</span>
+                </div>
+              </div>
+
+              <div>
+                <label class=" text-sm font-medium text-gray-700 mb-2 flex items-center gap-1">
+                  <span>🏷️</span> Discount (%)
+                </label>
+                <div class="relative">
+                  <input type="number" formControlName="discount" min="0" max="100" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 bg-white pl-8 focus:ring-2 focus:ring-blue-200 focus:border-blue-500 transition">
+                  <span class="absolute left-3 top-3 text-gray-400">%</span>
+                </div>
+              </div>
+
+              <div>
+                <label class=" text-sm font-medium text-gray-700 mb-2 flex items-center gap-1">
+                  <span>📦</span> Stock Quantity
+                </label>
+                <input type="number" formControlName="stockQuantity" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 bg-white focus:ring-2 focus:ring-blue-200 focus:border-blue-500 transition">
+              </div>
+            </div>
+
+            <!-- Variant Images -->
+            <div class="mb-5">
+              <label class=" text-sm font-medium text-gray-700 mb-3 flex items-center gap-1">
+                <span>🖼️</span> Variant Images
+              </label>
+              
+              <div class="relative mb-3">
+                <input type="file" (change)="onFileSelected($event, 'variantImage', i)" accept="image/*" multiple class="w-full opacity-0 absolute z-10 h-full cursor-pointer">
+                <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center bg-gray-50 hover:bg-gray-100 transition">
+                  <div class="flex flex-col items-center justify-center gap-2">
+                    <span class="text-gray-400 text-2xl">📤</span>
+                    <p class="text-sm text-gray-600">Click to upload variant images</p>
+                    <p class="text-xs text-gray-400">Upload multiple images (max 5)</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div *ngIf="getVariantImages(i).length > 0" class="flex flex-wrap gap-3">
+                <div *ngFor="let img of getVariantImages(i).controls; let j = index" class="relative group">
+                  <div class="w-20 h-20 bg-gray-100 rounded-lg border border-gray-200 flex items-center justify-center overflow-hidden">
+                    <span class="text-gray-400">🖼️</span>
+                  </div>
+                  <button type="button"  class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition">
+                    ×
+                  </button>
+                  <div class="text-xs text-gray-500 mt-1 text-center">#{{ j + 1 }}</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Core Attributes -->
+            <div>
+              <div class="flex justify-between items-center mb-3">
+                <label class=" text-sm font-medium text-gray-700 flex items-center gap-1">
+                  <span>📏</span> Core Attributes
+                </label>
+                <button type="button" (click)="addCoreAttribute(i)" class="flex items-center gap-1 text-blue-600 hover:text-blue-800 text-sm font-medium">
+                  <span>➕</span> Add Attribute
+                </button>
+              </div>
+              
+              <div formArrayName="coreAttributeValues" class="space-y-3">
+                <div *ngFor="let attr of getCoreAttributes(i).controls; let j = index" [formGroupName]="j" class="grid grid-cols-1 md:grid-cols-12 gap-3">
+                  <div class="md:col-span-5">
+                    <select formControlName="coreAttributeId" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 bg-white focus:ring-2 focus:ring-blue-200 focus:border-blue-500 transition text-sm">
+                      <option value="">Select Attribute</option>
+                      <option value="1">📏 Size</option>
+                      <option value="2">💾 Memory</option>
+                      <option value="3">⚖️ Weight</option>
+                      <option value="4">📐 Dimensions</option>
+                    </select>
+                  </div>
+                  <div class="md:col-span-6 flex items-center gap-2">
+                    <input type="text" formControlName="value" placeholder="Value" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 bg-white focus:ring-2 focus:ring-blue-200 focus:border-blue-500 transition text-sm">
+                  </div>
+                  <div class="md:col-span-1 flex items-center">
+                    <button type="button" (click)="removeCoreAttribute(i, j)" class="text-red-500 hover:text-red-700 p-2">
+                      <span>🗑️</span>
+                    </button>
+                  </div>
+                  <div *ngIf="(attr.get('coreAttributeId')?.touched && attr.get('coreAttributeId')?.errors?.['required']) || 
+                              (attr.get('value')?.touched && attr.get('value')?.errors?.['required'])" 
+                       class="col-span-full text-red-500 text-xs flex items-center gap-1">
+                    <span>⚠️</span> Both fields are required
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Actions -->
+      <div class="flex justify-end gap-3 pt-2">
+        <button type="button" (click)="closeAddProductModal()" 
+                class="px-5 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition flex items-center gap-2">
+          <span>✖️</span> Cancel
+        </button>
+        <button type="submit" 
+                class="px-5 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition shadow-md flex items-center gap-2 disabled:opacity-70"
+                [disabled]="productForm.invalid">
+          <span>💾</span> Save Product
+        </button>
+      </div>
+    </form>
+  </div>
 </div>

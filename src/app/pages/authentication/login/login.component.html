@@ -30,15 +30,44 @@
           </div>
         </div>
 
+         <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid" class="text-red-600 text-sm mt-1">
+      <div *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</div>
+      <div *ngIf="loginForm.get('email')?.errors?.['email']">Please enter a valid email address.</div>
+    </div>
+
         
 
-        <div class="mb-5">
-          <label class="block text-gray-700 mb-1">Password</label>
-          <div class="flex items-center border border-gray-300 rounded-lg px-4 py-2 bg-gray-50">
-            <i class="fas fa-lock text-gray-400 mr-3"></i>
-            <input type="password" placeholder="Enter your password"  formControlName="password"  class="w-full bg-transparent outline-none text-sm" required />
-          </div>
-        </div>
+       <div class="mb-5">
+  <label class="block text-gray-700 mb-1">Password</label>
+  <div class="relative flex items-center border border-gray-300 rounded-lg px-4 py-2 bg-gray-50">
+    <i class="fas fa-lock text-gray-400 mr-3"></i>
+
+    <!-- Password Input -->
+    <input
+      [type]="showPassword ? 'text' : 'password'"
+      formControlName="password"
+      placeholder="Enter your password"
+      class="w-full bg-transparent outline-none text-sm pr-10"
+      required
+    />
+
+    <!-- Eye Icon Toggle -->
+    <button type="button"
+            class="absolute right-3 text-gray-400 hover:text-gray-600 focus:outline-none"
+            (click)="showPassword = !showPassword">
+      <i class="fas" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+    </button>
+  </div>
+
+  <!-- Error messages -->
+  <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid" class="text-red-600 text-sm mt-1">
+    <div *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</div>
+    <div *ngIf="loginForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters long.</div>
+    <!-- <div *ngIf="loginForm.get('password')?.errors?.['pattern']">Password must contain at least 1 uppercase, 1 lowercase, and 1 number.</div> -->
+  </div>
+</div>
+
+
 
         <div class="flex justify-between items-center text-sm mb-6">
           <label class="flex items-center gap-2">
