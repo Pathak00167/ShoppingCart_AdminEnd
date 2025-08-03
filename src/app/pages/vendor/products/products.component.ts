@@ -2,13 +2,10 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
-// ✅ Import color-namer
 import namer from 'color-namer';
 import { VendorService } from '../../../../services/vendor.service';
 import { AdminService } from '../../../../services/admin.service';
 import { ToastrService } from 'ngx-toastr';
-
 
 @Component({
   selector: 'app-products',
@@ -110,15 +107,23 @@ export class ProductsComponent {
   }
 ]; 
 
-subcategories:any = '';
-categories: any = [];
+  subcategories: any = '';
+  categories: any = [];
   selectedProduct: any = null;
   showAddProductModal = false;
+  thumbnailPreview: string | ArrayBuffer | null = null;
+  currentStep: number = 1;
 
   productForm: FormGroup;
 
-  constructor(private fb: FormBuilder,private service:AdminService, private toastrService: ToastrService, private vendorService: VendorService) {
+  constructor(
+    private fb: FormBuilder,
+    private service: AdminService,
+    private toastrService: ToastrService,
+    private vendorService: VendorService
+  ) {
     this.productForm = this.fb.group({
+      CategoryId: [null, Validators.required],
       subCategoryId: [null, Validators.required],
       vendorId: [null],
       brand: ['', Validators.required],
@@ -130,7 +135,38 @@ categories: any = [];
     this.loadCategories();
   }
 
- loadCategories() {
+  // Stepper Navigation
+  nextStep() {
+    if (this.currentStep === 1 && !this.isStepValid(1)) {
+      this.markBasicInfoAsTouched();
+      return;
+    }
+    this.currentStep++;
+  }
+
+  prevStep() {
+    this.currentStep--;
+  }
+
+  isStepValid(step: number): boolean {
+    switch (step) {
+      case 1:
+        const subCategoryValid = this.productForm.get('subCategoryId')?.valid ?? false;
+        const brandValid = this.productForm.get('brand')?.valid ?? false;
+        const productNameValid = this.productForm.get('productName')?.valid ?? false;
+        const descriptionValid = this.productForm.get('description')?.valid ?? false;
+        const thumbnailValid = this.productForm.get('thumbnailImage')?.valid ?? false;
+        
+        return subCategoryValid && brandValid && productNameValid && descriptionValid && thumbnailValid;
+      case 2:
+        return this.variants.valid;
+      default:
+        return true;
+    }
+  }
+
+  // Category and Subcategory Loading
+  loadCategories() {
     this.service.getCategories().subscribe({
       next: (data) => {
         this.categories = data;
@@ -142,11 +178,18 @@ categories: any = [];
     });
   }
 
+  onCategoryChange(event: Event) {
+    const selectElement = event.target as HTMLSelectElement;
+    const categoryId = Number(selectElement.value);
+    if (categoryId) {
+      this.loadsubcategories(categoryId);
+    }
+  }
+
   loadsubcategories(id: number) {
-     this.service.getSubCategories(id).subscribe({
+    this.service.getSubCategories(id).subscribe({
       next: (data) => {
         this.subcategories = data;
-        console.log(data);
       },
       error: (error) => {
         console.error('Error fetching subcategories:', error);
@@ -220,23 +263,46 @@ categories: any = [];
 
     if (type === 'thumbnail') {
       this.productForm.patchValue({ thumbnailImage: file });
+      
+      // Create preview
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.thumbnailPreview = reader.result;
+      };
+      reader.readAsDataURL(file);
     } else if (type === 'variantImage' && variantIndex !== undefined) {
       this.addVariantImage(variantIndex, file);
     }
   }
 
+  removeThumbnail() {
+    this.thumbnailPreview = null;
+    this.productForm.patchValue({ thumbnailImage: null });
+    
+    // Clear the file input value
+    const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = '';
+    }
+  }
 
+  removeVariantImage(variantIndex: number, imgIndex: number) {
+    const images = this.getVariantImages(variantIndex);
+    images.removeAt(imgIndex);
+  }
 
-   // Add this method to get color name from hex
+  getImagePreview(file: File): string | ArrayBuffer {
+    if (file instanceof File) {
+      return URL.createObjectURL(file);
+    }
+    return '';
+  }
+
+  // Color handling
   getColorNameFromHex(hex: string): string {
     try {
-      // Remove # if present
       const cleanHex = hex.startsWith('#') ? hex.substring(1) : hex;
-      
-      // Get color names
       const names = namer(`#${cleanHex}`);
-      
-      // Return the most probable name (from ntc names)
       return names.ntc[0]?.name || `Custom Color (${hex})`;
     } catch (err) {
       console.error('Color naming failed:', err);
@@ -244,17 +310,18 @@ categories: any = [];
     }
   }
 
- onColorChange(hexValue: string, variantIndex: number): void {
-  if (!hexValue) return;
-  
-  const colorName = this.getColorNameFromHex(hexValue);
-  const variantGroup = this.variants.at(variantIndex) as FormGroup;
-  
-  if (variantGroup) {
-    variantGroup.get('colorName')?.setValue(colorName);
-    variantGroup.get('colorHex')?.setValue(hexValue);
+  onColorChange(hexValue: string, variantIndex: number): void {
+    if (!hexValue) return;
+    
+    const colorName = this.getColorNameFromHex(hexValue);
+    const variantGroup = this.variants.at(variantIndex) as FormGroup;
+    
+    if (variantGroup) {
+      variantGroup.get('colorName')?.setValue(colorName);
+      variantGroup.get('colorHex')?.setValue(hexValue);
+    }
   }
-}
+
   // Product modal
   openProductDetails(product: any) {
     this.selectedProduct = product;
@@ -266,11 +333,13 @@ categories: any = [];
 
   openAddProductModal() {
     this.showAddProductModal = true;
+    this.currentStep = 1;
   }
 
   closeAddProductModal() {
     this.showAddProductModal = false;
     this.resetProductForm();
+    this.currentStep = 1;
   }
 
   submitProduct() {
@@ -319,6 +388,15 @@ categories: any = [];
     return formData;
   }
 
+  private markBasicInfoAsTouched() {
+    this.productForm.get('CategoryId')?.markAsTouched();
+    this.productForm.get('subCategoryId')?.markAsTouched();
+    this.productForm.get('brand')?.markAsTouched();
+    this.productForm.get('productName')?.markAsTouched();
+    this.productForm.get('description')?.markAsTouched();
+    this.productForm.get('thumbnailImage')?.markAsTouched();
+  }
+
   private markAllAsTouched() {
     Object.values(this.productForm.controls).forEach(control => {
       control.markAsTouched();
@@ -335,7 +413,9 @@ categories: any = [];
   }
 
   private resetProductForm() {
+    this.thumbnailPreview = null;
     this.productForm.reset({
+      CategoryId: null,
       subCategoryId: null,
       vendorId: null,
       brand: '',
@@ -344,5 +424,29 @@ categories: any = [];
       thumbnailImage: null,
       variants: this.fb.array([this.createVariantFormGroup()])
     });
+  }
+
+  // Helper methods for review step
+  getCategoryName(id: number): string {
+    const category = this.categories.find((c: any) => c.id === id);
+    return category ? category.name : 'Not selected';
+  }
+
+  getSubcategoryName(id: number): string {
+    const subcategory = this.subcategories.find((s: any) => s.id === id);
+    return subcategory ? subcategory.name : 'Not selected';
+  }
+
+  getAttributeName(id: number): string {
+    const attributes = [
+      { id: 1, name: 'Size' },
+      { id: 2, name: 'Storage' },
+      { id: 3, name: 'Weight' },
+      { id: 4, name: 'Dimensions' },
+      { id: 5, name: 'Material' },
+      { id: 6, name: 'Battery' }
+    ];
+    const attr = attributes.find(a => a.id === id);
+    return attr ? attr.name : 'Unknown';
   }
 }
